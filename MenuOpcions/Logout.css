@@ -1,0 +1,80 @@
+/* Estilos generales */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Arial', sans-serif;
+}
+
+body {
+    background: #f0f2f5;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Contenedor principal */
+.logout-container {
+    text-align: center;
+    padding: 40px;
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 8px 30px rgba(0,60,130,0.1);
+    max-width: 500px;
+    width: 90%;
+}
+
+/* Textos */
+.message {
+    margin-bottom: 30px;
+}
+
+.main-message {
+    color: #003c82;
+    font-size: 2.2em;
+    line-height: 1.4;
+    margin-bottom: 15px;
+    font-weight: 600;
+}
+
+.sub-message {
+    color: #666;
+    font-size: 1.4em;
+    letter-spacing: 0.5px;
+}
+
+/* Botón */
+.logout-btn {
+    background: #003c82;
+    color: white;
+    border: none;
+    padding: 15px 40px;
+    border-radius: 12px;
+    font-size: 1.1em;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0,60,130,0.2);
+}
+
+.logout-btn:hover {
+    background: #0066cc;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0,60,130,0.3);
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+    .main-message {
+        font-size: 1.8em;
+    }
+    
+    .sub-message {
+        font-size: 1.2em;
+    }
+    
+    .logout-btn {
+        width: 100%;
+        padding: 15px;
+    }
+}

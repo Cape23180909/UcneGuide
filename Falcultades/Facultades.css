@@ -1,0 +1,198 @@
+:root {
+    --azul-principal: #074788;
+    --amarillo-accento: #F7D917;
+    --blanco: #FFFFFF;
+    --sombra: rgba(7, 71, 136, 0.1);
+}
+
+body {
+    background: #f8f9fa;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+.academic-container {
+    background: var(--blanco);
+    border-radius: 24px;
+    box-shadow: 0 8px 30px var(--sombra);
+    max-width: 1000px;
+    width: 90%;
+    margin: 2rem auto;
+    padding: 40px 50px;
+}
+
+.header-section {
+    text-align: center;
+    margin-bottom: 2.5rem;
+}
+
+.icon-circle {
+    width: 100px;
+    height: 100px;
+    background: var(--azul-principal);
+    border-radius: 50%;
+    margin: 0 auto 2.3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 12px rgba(7, 71, 136, 0.15);
+    transform: translateY(30px); 
+}
+
+.icon-circle i {
+    color: var(--amarillo-accento);
+    font-size: 2.8rem;
+}
+
+.main-title {
+    color: var(--azul-principal);
+    font-size: 2.4rem;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+}
+
+.faculty-group {
+    margin-bottom: 2.5rem;
+}
+
+.faculty-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.faculty-header i {
+    color: var(--amarillo-accento);
+    font-size: 1.8rem;
+    background: var(--azul-principal);
+    padding: 12px;
+    border-radius: 12px;
+}
+
+.faculty-title {
+    color: var(--azul-principal);
+    font-size: 1.6rem;
+    margin: 0;
+}
+
+.career-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1rem;
+}
+
+.career-card {
+    background: var(--blanco);
+    color: var(--azul-principal);
+    border: 2px solid var(--azul-principal);
+    padding: 1.2rem;
+    border-radius: 12px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: left;
+    position: relative;
+    overflow: hidden;
+}
+
+.career-card:hover {
+    background: var(--azul-principal);
+    color: var(--blanco);
+    transform: translateY(-3px);
+    box-shadow: 0 4px 15px rgba(7, 71, 136, 0.2);
+}
+
+.career-card:active {
+    transform: translateY(0);
+}
+
+.career-card::after {
+    content: "➔";
+    position: absolute;
+    right: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--amarillo-accento);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.career-card:hover::after {
+    opacity: 1;
+}
+
+.top-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 95px; /* Aumentamos el grosor */
+    background: linear-gradient(160deg, #003c82, #0066cc);
+    z-index: 1000;
+    box-shadow: 0 4px 15px rgba(0,60,130,0.25);
+    border-bottom: 3px solid #ffd700; /* Borde decorativo */
+}
+
+/* Agrega estos estilos en Facultades.css */
+.logo-button {
+    position: absolute;
+    left: 20px;
+    top: 20px;
+    z-index: 1001;
+    transition: transform 0.3s ease;
+}
+
+.header-logo {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    border: 2px solid var(--azul-principal);
+    box-shadow: 0 2px 8px rgba(7, 71, 136, 0.2);
+}
+
+.logo-button:hover {
+    transform: scale(1.05);
+}
+
+.logo-button:active {
+    transform: scale(0.95);
+}
+
+@media (max-width: 768px) {
+    .academic-container {
+        padding: 30px 25px;
+    }
+    
+    .main-title {
+        font-size: 2rem;
+    }
+    
+    .faculty-title {
+        font-size: 1.4rem;
+    }
+    
+    .career-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 480px) {
+    .icon-circle {
+        width: 80px;
+        height: 80px;
+    }
+    
+    .icon-circle i {
+        font-size: 2rem;
+    }
+    
+    .main-title {
+        font-size: 1.8rem;
+    }
+    
+    .faculty-header i {
+        font-size: 1.4rem;
+        padding: 8px;
+    }
+}
