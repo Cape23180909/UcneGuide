@@ -37,8 +37,14 @@
     </div>
 </body>
 </html>
+
 <?php
 session_start();
+if (isset($_SESSION['usuario'])) {
+    $nombreUsuario = $_SESSION['usuario']['nombre'];
+    $emailUsuario = $_SESSION['usuario']['email'];
+    $usuario_id = $_SESSION['usuario']['usuarioId'];
+}
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL);
@@ -49,7 +55,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit();
     }
 
-    // URL de la API (no filtrar email en la URL)
+    // URL de la API
     $apiUrl = "https://api-ucne-emfugwekcfefc3ef.eastus-01.azurewebsites.net/api/Usuarios";
 
     // Configurar cURL
@@ -68,9 +74,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Decodificar JSON
     $userData = json_decode($response, true);
-
-    // Buscar usuario en la lista
     $user = null;
+
     foreach ($userData as $u) {
         if ($u['email'] === $email) {
             $user = $u;
@@ -83,16 +88,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit();
     }
 
-    // Validar contraseña (no es un hash en la API, por lo que debe ser comparada directamente)
+    // Validar contraseña
     if ($password !== $user['password']) {
         header("Location: Login.php?error=" . urlencode("Contraseña incorrecta"));
         exit();
     }
 
-    // Iniciar sesión
-    $_SESSION['authToken'] = bin2hex(random_bytes(32)); // Token seguro
-    $_SESSION['nombre'] = [
+    // Iniciar sesión con la información del usuario
+    $_SESSION['authToken'] = bin2hex(random_bytes(32));
+    $_SESSION['usuario'] = [
         'usuarioId' => $user['usuarioId'],
+        'nombre' => $user['nombre'],
         'email' => $user['email']
     ];
 
