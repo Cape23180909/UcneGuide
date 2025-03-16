@@ -28,7 +28,9 @@
                     <h2 class="faculty-title">Facultad de Ingeniería</h2>
                 </div>
                 <div class="career-grid">
+                    <a href="MateriasSistemas.php">
                     <button class="career-card">Ingeniería en Sistemas y Cómputos</button>
+                    </a>
                     <button class="career-card">Ingeniería Civil</button>
                     <button class="career-card">Ingeniería Geomática</button>
                     <button class="career-card">Arquitectura</button>
