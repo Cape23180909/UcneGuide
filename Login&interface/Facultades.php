@@ -34,7 +34,7 @@
     <a href="AsignaturasCivil.php" class="career-link civil-button">
         <button class="career-card">Ingeniería Civil</button>
     </a>
-    <a href="MateriasGeomatica.php" class="career-link">
+    <a href="AsignaturasGeomatica.php" class="career-link">
         <button class="career-card">Ingeniería Geomática</button>
     </a>
     <a href="MateriasArquitectura.php" class="career-link">
