@@ -75,6 +75,9 @@ body {
     visibility: hidden;
     transition: all 0.3s ease;
     padding: 10px 0;
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
 }
 
 .dropdown-menu.show {
@@ -89,8 +92,9 @@ body {
     padding: 12px 20px;
     color: #003c82;
     transition: background 0.2s ease;
-    gap: 12px;
+    gap: 12px; /* Espaciado entre icono y texto */
     text-decoration: none;
+    margin: 10px 0;
 }
 
 .menu-item-dropdown:hover {
@@ -98,9 +102,17 @@ body {
 }
 
 .menu-item-dropdown i {
-    width: 20px;
     font-size: 16px;
     color: #003c82;
+    margin-right: 8px; /* Separación entre icono y texto */
+}
+
+/* Asegurarse que el icono esté siempre a la izquierda */
+.menu-item-dropdown a {
+    display: flex;
+    align-items: center; /* Alinea icono y texto verticalmente */
+    text-decoration: none;
+    color: inherit;
 }
 
 /* Menu Container */

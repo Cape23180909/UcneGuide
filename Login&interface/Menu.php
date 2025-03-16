@@ -28,17 +28,20 @@ $nombreUsuario = $_SESSION['usuario']['nombre'] ?? "Usuario";
             <div class="user-container" onclick="toggleMenu()">
                 <div class="user-icon"></div>
                 <div class="dropdown-menu">
-                <div class="menu-item-dropdown">
-                <a href="EditUser.php?id=<?= urlencode($usuario_id) ?>" class="menu-item-dropdown">Editar Usuario</a>
-        <i class="fas fa-user-edit"></i>
-        <!-- <span>Editar perfil</span> -->
-      </a>
-          </div>
-                <a href="Logout.php" class="menu-item-dropdown">
-                    <i class="fas fa-sign-out-alt"></i>
-                    <span>Cerrar sesión</span>
-                </a>
-                </div>
+    <div class="menu-item-dropdown">
+        <a href="EditUser.php?id=<?= urlencode($usuario_id) ?>" class="menu-item-dropdown">
+            <i class="fas fa-user-edit"></i>
+            Actualizar Usuario
+        </a>
+    </div>
+    <div class="menu-item-dropdown">
+        <a href="Logout.php" class="menu-item-dropdown">
+            <i class="fas fa-sign-out-alt"></i>
+            <span>Cerrar sesión</span>
+        </a>
+    </div>
+</div>
+
         </div>
         </div>
     </header>

@@ -15,7 +15,10 @@
             <div class="main-message">Descansa, recarga y regresa.</div>
             <div class="sub-message">¡Hasta pronto!</div>
         </div>
-        <a href="Login.php" class="logout-btn">Confirmar logout</a>
+        <div class="button-container">
+    <a href="Menu.php" class="back-btn">Volver</a>
+    <a href="Login.php" class="logout-btn">Confirmar logout</a>
+        </div>
     </div>
 </body>
 </html>

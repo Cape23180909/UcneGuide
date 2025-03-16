@@ -90,6 +90,7 @@ body {
     border: 2px solid transparent;
 }
 
+
 .logout-btn:hover {
     background: var(--azul-hover);
     transform: translateY(-2px);
@@ -114,6 +115,38 @@ body {
     justify-content: center;
     box-shadow: 0 4px 12px rgba(0,60,130,0.15);
     padding: 15px; /* Espacio interno para la imagen */
+}
+
+.back-btn {
+    display: inline-block;
+    background: linear-gradient(135deg, #6b6b6b, #4a4a4a);
+    color: var(--blanco);
+    text-decoration: none;
+    padding: 14px 48px;
+    border-radius: 10px;
+    font-size: 1.05rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0,60,130,0.2);
+    font-weight: 600;
+    border: 2px solid transparent;
+}
+
+/* Efectos al pasar el mouse sobre los botones */
+.back-btn:hover, .logout-btn:hover {
+    background: var(--azul-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0,60,130,0.3);
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+    /* En pantallas pequeñas, los botones se adaptan */
+    .back-btn, .logout-btn {
+        width: 100%; /* Ocupa todo el ancho disponible */
+        padding: 14px;
+        font-size: 0.95rem;
+    }
 }
 
 /* Responsive */
