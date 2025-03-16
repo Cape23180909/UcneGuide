@@ -71,17 +71,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     // Preparar datos para actualización
-    $payload = [
-        'nombre' => $_POST['nombre'],
-        'email' => $_POST['email'],
-        'carreraId' => (int)$_POST['carreraId'],
-        'facultadId' => (int)$_POST['facultadId']
-    ];
+   // --- Modificar el bloque de preparación del payload ---
+$payload = [
+    'usuarioId' => $usuarioId,
+    'nombre' => $_POST['nombre'],
+    'email' => $_POST['email'],
+    'carreraId' => (int)$_POST['carreraId'],
+    'facultadId' => (int)$_POST['facultadId']
+];
 
-    // Agregar contraseña si se proporciona
-    if (!empty($password)) {
-        $payload['password'] = password_hash($password, PASSWORD_DEFAULT);
-    }
+// Ajustar el campo de contraseña según lo que requiera la API
+if (!empty($password)) {
+    // Si la API espera texto plano:
+    $payload['password'] = $password; 
+    
+    // O si requiere confirmación de contraseña actual:
+    // $payload = [
+    //     'nuevaPassword' => $password,
+    //     'confirmacionPassword' => $_POST['confirm_password'],
+    //     'passwordActual' => $_POST['current_password'] // Agregar campo en el formulario
+    // ];
+}
 
     // Enviar actualización a la API
     $respuesta = llamarAPI(
@@ -92,30 +102,35 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Manejar respuesta
     if ($respuesta['status'] >= 200 && $respuesta['status'] < 300) {
-        // Actualizar datos en sesión
-        $_SESSION['usuario']['nombre'] = $_POST['nombre'];
-        $_SESSION['usuario']['email'] = $_POST['email'];
-        $_SESSION['usuario']['carreraId'] = $_POST['carreraId'];
-        $_SESSION['usuario']['facultadId'] = $_POST['facultadId'];
+        // Actualizar TODOS los datos en sesión
+        $_SESSION['usuario'] = [
+            'usuarioId' => $usuarioId,
+            'nombre' => $_POST['nombre'],
+            'email' => $_POST['email'],
+            'carreraId' => $_POST['carreraId'],
+            'facultadId' => $_POST['facultadId']
+        ];
         
         $_SESSION['success'] = "¡Datos actualizados correctamente!";
+        header("Location: Menu.php"); // Redirigir al menú principal
+        exit();
     } else {
         $_SESSION['error'] = "Error al actualizar: " . ($respuesta['data']['message'] ?? 'Código ' . $respuesta['status']);
+        header("Location: EditUser.php");
+        exit();
     }
-    
-    header("Location: EditUser.php");
-    exit();
 }
 
 // Generar token CSRF
 $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
 ?>
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Editar Usuario</title>
+    <title>Actualizar Usuario</title>
     <link rel="stylesheet" href="EditUser.css">
 </head>
 <body>
@@ -128,7 +143,7 @@ $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
         </div>
 
         <div class="signup-box">
-            <h2>Editar Cuenta</h2>
+            <h2>Actualizar Usuario</h2>
             
             <?php if ($error): ?>
                 <div class="alert error"><?= htmlspecialchars($error) ?></div>
@@ -190,7 +205,12 @@ $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
                         </select>
                     </div>
 
-                    <button type="submit" class="signup-btn">Actualizar Datos</button>
+                    <div class="form-group">
+    <div class="button-container">
+        <button type="submit" class="signup-btn">Actualizar Usuario</button>
+        <a href="Menu.php" class="back-btn">Volver</a>
+    </div>
+</div>
                 </div>
             </form>
         </div>
