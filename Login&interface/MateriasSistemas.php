@@ -6,7 +6,7 @@ $apiUrl = "https://api-ucne-emfugwekcfefc3ef.eastus-01.azurewebsites.net/api/Asi
 $ch = curl_init();
 curl_setopt($ch, CURLOPT_URL, $apiUrl);
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // Deshabilitar verificación SSL si es necesario
+curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
 
 // Ejecutar y obtener respuesta
 $response = curl_exec($ch);
@@ -16,9 +16,10 @@ curl_close($ch);
 // Decodificar JSON y manejar posibles errores
 $asignaturas = json_decode($response, true);
 if ($httpCode !== 200 || !is_array($asignaturas)) {
-    $asignaturas = []; // Si hay error, usar array vacío
+    $asignaturas = [];
 }
 
+$carreraIdBuscado = 1; // ID específico para Sistemas
 ?>
 
 <!DOCTYPE html>
@@ -32,20 +33,28 @@ if ($httpCode !== 200 || !is_array($asignaturas)) {
 <body>
     <div class="container">
         <header>
-        <a href="Menu.php">
-    <img src="/Imagenes/guia-turistico 3.png" alt="Logo">
-</a>
+        <a href="Facultades.php">
+            <img src="/Imagenes/guia-turistico 3.png" alt="Logo">
+        </a>
             Ingeniería en Sistemas y Cómputos
-            <!-- <button class="back-button">&#x21A9;</button> -->
         </header>
         <div class="materias">
-            <?php if (!empty($asignaturas)): ?>
+            <?php if (!empty($asignaturas)): 
+                $mostradas = 0; // Contador de materias mostradas
+                ?>
                 <?php foreach ($asignaturas as $asignatura): ?>
-                    <div class="materia">
-                        <strong><?php echo htmlspecialchars($asignatura['codigoAsignatura'] ?? 'N/A'); ?></strong> 
-                        <?php echo htmlspecialchars($asignatura['nombreAsignatura'] ?? 'Sin nombre'); ?>
-                    </div>
+                    <?php if (isset($asignatura['carreraId']) && $asignatura['carreraId'] == $carreraIdBuscado): ?>
+                        <div class="materia">
+                            <strong><?php echo htmlspecialchars($asignatura['codigoAsignatura'] ?? 'N/A'); ?></strong> 
+                            <?php echo htmlspecialchars($asignatura['nombreAsignatura'] ?? 'Sin nombre'); ?>
+                        </div>
+                        <?php $mostradas++; ?>
+                    <?php endif; ?>
                 <?php endforeach; ?>
+                
+                <?php if ($mostradas === 0): ?>
+                    <p>No se encontraron materias para esta carrera.</p>
+                <?php endif; ?>
             <?php else: ?>
                 <p>No se encontraron materias disponibles.</p>
             <?php endif; ?>

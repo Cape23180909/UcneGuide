@@ -96,6 +96,10 @@ body {
     overflow: hidden;
 }
 
+.civil-button .career-card {
+    margin-left: 50px; /* Ajusta este valor según cuánto quieras moverlo */
+}
+
 .career-card:hover {
     background: var(--azul-principal);
     color: var(--blanco);
