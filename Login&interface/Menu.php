@@ -4,8 +4,41 @@ if (!isset($_SESSION['authToken'])) {
     header('Location: Login.php');
     exit();
 }
+
 $usuario_id = $_SESSION['usuario']['usuarioId'] ?? null;
 $nombreUsuario = $_SESSION['usuario']['nombre'] ?? "Usuario";
+$carreraId = $_SESSION['usuario']['carreraId'] ?? null;
+
+// Función para obtener el enlace según la carrera
+function obtenerEnlaceAsignaturas($carreraId) {
+    switch ($carreraId) {
+        case 1: return 'MateriasSistemas.php';
+        case 2: return 'AsignaturasCivil.php';
+        case 3: return 'AsignaturasGeomatica.php';
+        case 4: return 'AsignaturasAdminEmpresa.php';
+        case 5: return 'AsignaturasMatematicas.php';
+        case 6: return 'AsignaturasMedicina.php';
+        case 7: return 'AsignaturasPsicologia.php';
+        case 8: return 'AsignaturasEnfermeria.php';
+        case 9: return 'AsignaturasOdontologia.php';
+        case 10: return 'AsignaturasMercadeo.php';
+        case 11: return 'AsignaturasContabilidad.php';
+        case 12: return 'AsignaturasArquitectura.php';
+        case 13: return 'AsignaturasTurismo.php';
+        case 14: return 'AsignaturasDerecho.php';
+        default: 
+            // Podemos redirigir o manejar el error según necesidades
+            return 'carrera_no_registrada.php'; // Nueva página para carreras no identificadas
+    }
+}
+
+// Verificamos que tenga carrera asignada
+if(is_null($carreraId)) {
+    header('Location: error.php?codigo=sin_carrera');
+    exit();
+}
+
+$enlaceAsignaturas = obtenerEnlaceAsignaturas($carreraId);
 ?>
 
 <!DOCTYPE html>
@@ -48,12 +81,12 @@ $nombreUsuario = $_SESSION['usuario']['nombre'] ?? "Usuario";
 
     <!-- Menú principal -->
     <nav class="menu-container">
-    <a href="MateriasSistemas.php" class="menu-link">
-    <div class="menu-item">
-        <img src="/Imagenes/Asignaturas.png" alt="Facultades" class="menu-icon">
-        <span>Asignaturas</span>
-    </div>
-</a>
+        <a href="<?php echo $enlaceAsignaturas; ?>" class="menu-link">
+            <div class="menu-item">
+                <img src="/Imagenes/Asignaturas.png" alt="Facultades" class="menu-icon">
+                <span>Asignaturas</span>
+            </div>
+        </a>
 
         <div class="menu-item">
             <img src="/Imagenes/Subgerencias.png" alt="Sugerencias" class="menu-icon">
