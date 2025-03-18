@@ -44,6 +44,7 @@ if (isset($_SESSION['usuario'])) {
     $nombreUsuario = $_SESSION['usuario']['nombre'];
     $emailUsuario = $_SESSION['usuario']['email'];
     $usuario_id = $_SESSION['usuario']['usuarioId'];
+    $carrera_id = $_SESSION['carrera']['carreraId'];
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
