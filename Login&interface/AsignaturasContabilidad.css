@@ -1,0 +1,126 @@
+/* Estilos generales */
+body {
+    font-family: Arial, sans-serif;
+    background-color: white; /* Fondo claro */
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Barra de navegación */
+.navbar {
+    width: 100%;
+    background: linear-gradient(to right, #023E8A, #0077B6); /* Azul degradado */
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px 30px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 60px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+}
+
+/* Logo */
+.logo {
+    width: 40px;
+    height: 40px;
+}
+
+/* Enlaces de navegación */
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+    padding: 0;
+    margin: 0;
+}
+
+.nav-links li {
+    display: inline;
+}
+
+.nav-links a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s ease-in-out;
+}
+
+.nav-links a:hover {
+    color: #FFD700; /* Amarillo dorado */
+}
+
+/* Botón de regreso */
+.back-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.5em;
+    color: #FFD700;
+    transition: transform 0.2s ease-in-out;
+}
+
+.back-button:hover {
+    transform: scale(1.2);
+}
+
+/* Contenedor principal */
+.container {
+    width: 90%;
+    max-width: 2000px; /* Más ancho para web */
+    background: white;
+    padding: 0;
+    margin-top: 80px; /* Ajuste para evitar solapamiento con la barra de navegación */
+    border-radius: 15px;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+    text-align: center;
+    overflow: hidden;
+}
+
+/* Cabecera */
+header {
+    background: linear-gradient(to right, #023E8A, #0077B6);
+    color: white;
+    padding: 20px;
+    font-size: 1.4em;
+    font-weight: bold;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+}
+
+/* Contenedor de materias */
+.materias {
+    padding: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    justify-content: center;
+}
+
+/* Tarjetas de materias */
+.materia {
+    background: #EEEEEE;
+    padding: 15px;
+    border-radius: 10px;
+    width: 300px;
+    text-align: left;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+    font-size: 1.1em;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: transform 0.2s ease-in-out;
+}
+
+.materia:hover {
+    transform: translateY(-3px);
+    background: #074788; /* Azul más claro */
+    color: white;
+}
