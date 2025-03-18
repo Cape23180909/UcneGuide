@@ -33,7 +33,7 @@ $carreraIdBuscado = 5; // ID específico para Sistemas
 <body>
     <div class="container">
         <header>
-        <a href="Facultades.php">
+        <a href="Menu.php">
             <img src="/Imagenes/guia-turistico 3.png" alt="Logo">
         </a>
         Matematica Orientada a la Educacion Secundaria
