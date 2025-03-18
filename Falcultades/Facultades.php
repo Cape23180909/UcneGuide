@@ -28,11 +28,19 @@
                     <h2 class="faculty-title">Facultad de Ingeniería</h2>
                 </div>
                 <div class="career-grid">
-                    <button class="career-card">Ingeniería en Sistemas y Cómputos</button>
-                    <button class="career-card">Ingeniería Civil</button>
-                    <button class="career-card">Ingeniería Geomática</button>
-                    <button class="career-card">Arquitectura</button>
-                </div>
+    <a href="MateriasSistemas.php" class="career-link">
+        <button class="career-card">Ingeniería en Sistemas y Cómputos</button>
+    </a>
+    <a href="AsignaturasCivil.php" class="career-link civil-button">
+        <button class="career-card">Ingeniería Civil</button>
+    </a>
+    <a href="AsignaturasGeomatica.php" class="career-link">
+        <button class="career-card">Ingeniería Geomática</button>
+    </a>
+    <a href="MateriasArquitectura.php" class="career-link">
+        <button class="career-card">Arquitectura</button>
+    </a>
+</div>
             </div>
 
             <!-- Facultad de Educación -->
