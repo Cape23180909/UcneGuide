@@ -1,6 +1,6 @@
 <?php
 // URL de la API
-$apiUrl = "https://api-ucne-emfugwekcfefc3ef.eastus-01.azurewebsites.net/api/Asignaturas";
+$apiUrl = "https://api-ucne-emfugwekcfefc3ef.eastus-01.azurewebsites.net/api/Asignaturas?CarreraId=11";
 
 // Inicializar cURL
 $ch = curl_init();
@@ -19,7 +19,7 @@ if ($httpCode !== 200 || !is_array($asignaturas)) {
     $asignaturas = [];
 }
 
-$carreraIdBuscado = 12; // ID específico para Sistemas
+$carreraIdBuscado = 11; // ID específico para Sistemas
 ?>
 
 <!DOCTYPE html>
@@ -27,8 +27,8 @@ $carreraIdBuscado = 12; // ID específico para Sistemas
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Asignaturas Arquitectura</title>
-    <link rel="stylesheet" href="AsignaturasArquitectura.css">
+    <title>Asignaturas Contabilidad</title>
+    <link rel="stylesheet" href="AsignaturasContabilidad.css">
 </head>
 <body>
     <div class="container">
@@ -36,7 +36,7 @@ $carreraIdBuscado = 12; // ID específico para Sistemas
         <a href="Facultades.php">
             <img src="/Imagenes/guia-turistico 3.png" alt="Logo">
         </a>
-        Arquitectura
+        Contabilidad
         </header>
         <div class="materias">
             <?php if (!empty($asignaturas)): 

@@ -48,10 +48,10 @@ $nombreUsuario = $_SESSION['usuario']['nombre'] ?? "Usuario";
 
     <!-- Menú principal -->
     <nav class="menu-container">
-    <a href="Facultades.php" class="menu-link">
+    <a href="MateriasSistemas.php" class="menu-link">
     <div class="menu-item">
-        <img src="/Imagenes/facultades.png" alt="Facultades" class="menu-icon">
-        <span>Facultades</span>
+        <img src="/Imagenes/Asignaturas.png" alt="Facultades" class="menu-icon">
+        <span>Asignaturas</span>
     </div>
 </a>
 

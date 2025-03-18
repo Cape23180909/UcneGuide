@@ -1,6 +1,6 @@
 <?php
 // URL de la API
-$apiUrl = "https://api-ucne-emfugwekcfefc3ef.eastus-01.azurewebsites.net/api/Asignaturas";
+$apiUrl = "https://api-ucne-emfugwekcfefc3ef.eastus-01.azurewebsites.net/api/Asignaturas?CarreraId=1";
 
 // Inicializar cURL
 $ch = curl_init();
