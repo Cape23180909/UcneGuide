@@ -44,7 +44,7 @@ if (isset($_SESSION['usuario'])) {
     $nombreUsuario = $_SESSION['usuario']['nombre'];
     $emailUsuario = $_SESSION['usuario']['email'];
     $usuario_id = $_SESSION['usuario']['usuarioId'];
-    $carrera_id = $_SESSION['carrera']['carreraId'];
+    $carrera = $_SESSION['usuario']['carreraNombre'] ?? 'Sin carrera asignada';
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -100,7 +100,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $_SESSION['usuario'] = [
         'usuarioId' => $user['usuarioId'],
         'nombre' => $user['nombre'],
-        'email' => $user['email']
+        'email' => $user['email'],
+        'carreraId' => $user['carreraId'],
+        'carreraNombre' => $user['carreraNombre']
     ];
 
     header('Location: Menu.php');
