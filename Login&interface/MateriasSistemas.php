@@ -1,19 +1,13 @@
 <?php
-// URL de la API
 $apiUrl = "https://api-ucne-emfugwekcfefc3ef.eastus-01.azurewebsites.net/api/Asignaturas?CarreraId=1";
-
-// Inicializar cURL
 $ch = curl_init();
 curl_setopt($ch, CURLOPT_URL, $apiUrl);
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-
-// Ejecutar y obtener respuesta
 $response = curl_exec($ch);
 $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 curl_close($ch);
 
-// Decodificar JSON y manejar posibles errores
 $asignaturas = json_decode($response, true);
 if ($httpCode !== 200 || !is_array($asignaturas)) {
     $asignaturas = [];
@@ -62,7 +56,7 @@ $carreraIdBuscado = 1; // ID específico para Sistemas
     </div>
     <script>
         function verDetalles(codigo) {
-            window.location.href = "DetallesAsignatura.php?codigo=" + codigo;
+            window.location.href = "DescripcionAsignaturas.php?codigo=" + codigo;
         }
     </script>
 </body>
