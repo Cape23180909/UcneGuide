@@ -28,23 +28,23 @@ $carreraIdBuscado = 14; // ID específico para Sistemas
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Asignaturas Derecho</title>
-    <link rel="stylesheet" href="AsignaturasDerecho.css">
+    <link rel="stylesheet" href="MateriasSistemas.css">
 </head>
 <body>
     <div class="container">
         <header>
-        <a href="Menu.php">
-            <img src="/Imagenes/guia-turistico 3.png" alt="Logo">
-        </a>
-        Derecho
+            <a href="Menu.php">
+                <img src="/Imagenes/guia-turistico 3.png" alt="Logo">
+            </a>
+          Derecho
         </header>
         <div class="materias">
             <?php if (!empty($asignaturas)): 
-                $mostradas = 0; // Contador de materias mostradas
-                ?>
+                $mostradas = 0; 
+            ?>
                 <?php foreach ($asignaturas as $asignatura): ?>
                     <?php if (isset($asignatura['carreraId']) && $asignatura['carreraId'] == $carreraIdBuscado): ?>
-                        <div class="materia">
+                        <div class="materia" onclick="verDetalles('<?php echo $asignatura['codigoAsignatura']; ?>')">
                             <strong><?php echo htmlspecialchars($asignatura['codigoAsignatura'] ?? 'N/A'); ?></strong> 
                             <?php echo htmlspecialchars($asignatura['nombreAsignatura'] ?? 'Sin nombre'); ?>
                         </div>
@@ -60,5 +60,10 @@ $carreraIdBuscado = 14; // ID específico para Sistemas
             <?php endif; ?>
         </div>
     </div>
+    <script>
+        function verDetalles(codigo) {
+            window.location.href = "DetallesAsignatura.php?codigo=" + codigo;
+        }
+    </script>
 </body>
 </html>

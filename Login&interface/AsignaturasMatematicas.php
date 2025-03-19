@@ -22,29 +22,30 @@ if ($httpCode !== 200 || !is_array($asignaturas)) {
 $carreraIdBuscado = 5; // ID específico para Sistemas
 ?>
 
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Asignaturas Matematica Orientada a la Educacion Secundaria</title>
-    <link rel="stylesheet" href="AsignaturasMatematicas.css">
+    <link rel="stylesheet" href="MateriasSistemas.css">
 </head>
 <body>
     <div class="container">
         <header>
-        <a href="Menu.php">
-            <img src="/Imagenes/guia-turistico 3.png" alt="Logo">
-        </a>
-        Matematica Orientada a la Educacion Secundaria
+            <a href="Menu.php">
+                <img src="/Imagenes/guia-turistico 3.png" alt="Logo">
+            </a>
+            Matematica Orientada a la Educacion Secundaria
         </header>
         <div class="materias">
             <?php if (!empty($asignaturas)): 
-                $mostradas = 0; // Contador de materias mostradas
-                ?>
+                $mostradas = 0; 
+            ?>
                 <?php foreach ($asignaturas as $asignatura): ?>
                     <?php if (isset($asignatura['carreraId']) && $asignatura['carreraId'] == $carreraIdBuscado): ?>
-                        <div class="materia">
+                        <div class="materia" onclick="verDetalles('<?php echo $asignatura['codigoAsignatura']; ?>')">
                             <strong><?php echo htmlspecialchars($asignatura['codigoAsignatura'] ?? 'N/A'); ?></strong> 
                             <?php echo htmlspecialchars($asignatura['nombreAsignatura'] ?? 'Sin nombre'); ?>
                         </div>
@@ -60,5 +61,10 @@ $carreraIdBuscado = 5; // ID específico para Sistemas
             <?php endif; ?>
         </div>
     </div>
+    <script>
+        function verDetalles(codigo) {
+            window.location.href = "DetallesAsignatura.php?codigo=" + codigo;
+        }
+    </script>
 </body>
 </html>
