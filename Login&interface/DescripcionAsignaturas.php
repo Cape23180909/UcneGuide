@@ -1,17 +1,44 @@
 <?php
-$codigoAsignatura = isset($_GET['codigo']) ? $_GET['codigo'] : '';
-$apiUrl = "https://api-ucne-emfugwekcfefc3ef.eastus-01.azurewebsites.net/api/AsignaturaDetalles?CodigoAsignatura=" . urlencode($codigoAsignatura);
-$ch = curl_init();
-curl_setopt($ch, CURLOPT_URL, $apiUrl);
-curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-$response = curl_exec($ch);
-$httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-curl_close($ch);
+$codigoAsignatura = $_GET['codigo'] ?? '';
+$apiBaseUrl = "https://api-ucne-emfugwekcfefc3ef.eastus-01.azurewebsites.net/api/Asignaturas";
 
-$detalleAsignatura = json_decode($response, true);
-if ($httpCode !== 200 || !is_array($detalleAsignatura)) {
-    $detalleAsignatura = [];
+// Función para obtener datos de la API
+function obtenerDatosAPI($url) {
+    $ch = curl_init($url);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+    $response = curl_exec($ch);
+    curl_close($ch);
+
+    return json_decode($response, true) ?: [];
+}
+
+// Obtener todas las asignaturas y buscar la específica
+$asignaturas = obtenerDatosAPI($apiBaseUrl);
+$detalleAsignatura = [];
+
+foreach ($asignaturas as $asignatura) {
+    if ($asignatura['codigoAsignatura'] === $codigoAsignatura) {
+        $detalleAsignatura = $asignatura;
+        break;
+    }
+}
+
+// Obtener docente y comentarios si hay datos disponibles
+$docentes = [];
+$comentarios = [];
+
+if (!empty($detalleAsignatura)) {
+    $docenteId = $detalleAsignatura['docenteId'] ?? '';
+
+    if (!empty($docenteId)) {
+        $docenteData = obtenerDatosAPI("$apiBaseUrl/Docente?DocenteId=" . urlencode($docenteId));
+        if (!empty($docenteData) && is_array($docenteData)) {
+            $docentes[] = $docenteData;
+        }
+    }
+
+    $comentarios = obtenerDatosAPI("$apiBaseUrl/Comentarios?CodigoAsignatura=" . urlencode($codigoAsignatura));
 }
 ?>
 
@@ -25,24 +52,52 @@ if ($httpCode !== 200 || !is_array($detalleAsignatura)) {
 </head>
 <body>
     <div class="container">
-        <header>
-            <a href="Menu.php">
+        <header class="header">
+            <a href="Menu.php" class="logo">
                 <img src="/Imagenes/guia-turistico 3.png" alt="Logo">
             </a>
-            Detalles de la Asignatura
+            <h2><?= htmlspecialchars($detalleAsignatura['nombreAsignatura'] ?? "Asignatura no encontrada") ?></h2>
         </header>
 
-        <?php if (!empty($detalleAsignatura)): ?>
-            <h3><?php echo htmlspecialchars($detalleAsignatura['nombreAsignatura']); ?></h3>
-            <p><strong>Código:</strong> <?php echo htmlspecialchars($detalleAsignatura['codigoAsignatura']); ?></p>
-            <p><strong>Descripción:</strong> <?php echo nl2br(htmlspecialchars($detalleAsignatura['descripcionAsignatura'])); ?></p>
-            <p><strong>Duración:</strong> <?php echo htmlspecialchars($detalleAsignatura['duracion']); ?> horas</p>
-            <p><strong>Requisitos:</strong> <?php echo htmlspecialchars($detalleAsignatura['requisitos']); ?></p>
-            <p><strong>Docente ID:</strong> <?php echo htmlspecialchars($detalleAsignatura['docenteId']); ?></p>
-            <p><strong>Carrera ID:</strong> <?php echo htmlspecialchars($detalleAsignatura['carreraId']); ?></p>
-        <?php else: ?>
-            <p>No se encontraron detalles para esta asignatura.</p>
-        <?php endif; ?>
+        <section class="detalle-asignatura">
+            <h3>Detalles de la asignatura:</h3>
+            <p><strong>Código:</strong> <?= htmlspecialchars($detalleAsignatura['codigoAsignatura'] ?? "N/A") ?></p>
+            <p><strong>Descripción:</strong> <?= nl2br(htmlspecialchars($detalleAsignatura['descripcionAsignatura'] ?? "Sin descripción")) ?></p>
+        </section>
+
+        <section class="docentes">
+            <h3>Docente:</h3>
+            <?php if (!empty($docentes)): ?>
+                <ul>
+                    <li><?= htmlspecialchars($docentes[0]['nombre'] ?? "Docente desconocido") ?></li>
+                </ul>
+            <?php else: ?>
+                <p>No hay docentes registrados.</p>
+            <?php endif; ?>
+        </section>
+
+        <section class="comentarios">
+            <h3>Comentarios:</h3>
+            <form action="guardar_comentario.php" method="post">
+                <input type="hidden" name="codigoAsignatura" value="<?= htmlspecialchars($codigoAsignatura) ?>">
+                <label for="usuario">Nombre de usuario:</label>
+                <input type="text" id="usuario" name="usuario" required>
+                <label for="comentario">Tu comentario:</label>
+                <textarea id="comentario" name="comentario" required></textarea>
+                <button type="submit">Comentar</button>
+            </form>
+
+            <?php if (!empty($comentarios)): ?>
+                <?php foreach ($comentarios as $comentario): ?>
+                    <div class="comentario-card">
+                        <p><strong>@<?= htmlspecialchars($comentario['usuario'] ?? "Anónimo") ?></strong> → <?= htmlspecialchars($comentario['docente'] ?? "Sin docente") ?></p>
+                        <p><?= htmlspecialchars($comentario['contenido'] ?? "Sin contenido") ?></p>
+                    </div>
+                <?php endforeach; ?>
+            <?php else: ?>
+                <p>No hay comentarios disponibles.</p>
+            <?php endif; ?>
+        </section>
     </div>
 </body>
 </html>
