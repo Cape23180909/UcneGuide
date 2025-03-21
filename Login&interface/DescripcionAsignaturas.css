@@ -9,6 +9,17 @@ body {
     align-items: center;
 }
 
+.container {
+    width: 90%;
+    max-width: 1200px;
+    background: white;
+    margin-top: 80px;
+    border-radius: 15px;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+    text-align: center;
+    overflow: hidden;
+}
+
 /* Barra de navegación */
 .navbar {
     width: 100%;
@@ -26,37 +37,24 @@ body {
     z-index: 1000;
 }
 
-/* Logo */
+.navbar header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
 .logo {
-    width: 40px;
-    height: 40px;
+    width: 50px;
+    height: 50px;
 }
 
-/* Botón de regreso */
-.back-button {
-    background: none;
-    border: none;
-    cursor: pointer;
-    font-size: 1.5em;
-    color: #FFD700;
-    transition: transform 0.2s ease-in-out;
-}
-
-.back-button:hover {
-    transform: scale(1.2);
-}
-
-/* Contenedor principal */
-.container {
-    width: 90%;
-    max-width: 2000px;
-    background: white;
-    padding: 0;
-    margin-top: 80px;
-    border-radius: 15px;
-    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+.title {
+    font-size: 2.4em;
+    font-weight: bold;
+    color: white;
     text-align: center;
-    overflow: hidden;
+    position: relative;
+    left: -600px; 
 }
 
 /* Cabecera */
@@ -66,39 +64,45 @@ header {
     padding: 20px;
     font-size: 1.4em;
     font-weight: bold;
-    border-top-left-radius: 15px;
-    border-top-right-radius: 15px;
+    border-radius: 15px 15px 0 0;
 }
 
 /* Secciones */
-.details, .docentes, .comentarios {
+.section {
     background-color: #EEEEEE;
     color: black;
-    margin: 20px 0;
+    margin: 20px;
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
-}
-
-/* Docentes y Comentarios */
-.docente, .comentario {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    padding: 15px 0;
-}
-
-.docente i, .comentario i {
-    font-size: 40px;
-    color: #023E8A;
-}
-
-small {
-    color: gray;
 }
 
 h3 {
     border-bottom: 2px solid #0077B6;
     padding-bottom: 5px;
     margin-bottom: 15px;
+}
+
+/* Comentarios */
+.comentarios textarea {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.comentarios button {
+    margin-top: 10px;
+    padding: 10px 20px;
+    border: none;
+    background-color: #0077B6;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.comentarios button:hover {
+    background-color: #023E8A;
 }
