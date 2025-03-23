@@ -90,7 +90,7 @@ $enlaceAsignaturas = obtenerEnlaceAsignaturas($carreraId);
 
         <div class="menu-item">
             <img src="/Imagenes/Subgerencias.png" alt="Sugerencias" class="menu-icon">
-            <span>Sugerencias</span>
+            <span>Comentarios</span>
         </div>
         
         <nav class="menu container">
