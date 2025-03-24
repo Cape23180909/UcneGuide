@@ -69,14 +69,19 @@ foreach ($asignaturas as $asignatura) {
                 <div class="alert alert-success">¡Comentario enviado correctamente!</div>
             <?php endif; ?>
             
+            <?php if (!empty($_GET['error'])): ?>
+                <div class="alert alert-danger">Error al enviar el comentario. Inténtalo de nuevo.</div>
+            <?php endif; ?>
+            
             <form action="guardar_comentario.php" method="post">
-    <input type="hidden" name="nombreAsignatura" value="<?= htmlspecialchars($detalleAsignatura['nombreAsignatura'] ?? '') ?>">
-    <input type="hidden" name="docenteId" value="<?= htmlspecialchars($detalleAsignatura['docenteId'] ?? '') ?>">
-    <input type="hidden" name="nombreDocente" value="<?= htmlspecialchars(obtenerNombreDocente($detalleAsignatura['docenteId'] ?? null, $apiDocentesUrl) ?? '') ?>">
-    <input type="hidden" name="usuarioId" value="0"> <!-- Reemplaza con el ID del usuario si está disponible -->
-    <textarea name="comentario" placeholder="Escribe tu comentario aquí..." required></textarea>
-    <button type="submit">Publicar comentario</button>
-</form>
+                <input type="hidden" name="asignaturaId" value="<?= htmlspecialchars($detalleAsignatura['asignaturaId'] ?? '') ?>">
+                <input type="hidden" name="docenteId" value="<?= htmlspecialchars($detalleAsignatura['docenteId'] ?? '') ?>">
+                <input type="hidden" name="codigoAsignatura" value="<?= htmlspecialchars($detalleAsignatura['codigoAsignatura'] ?? '') ?>">
+                <input type="hidden" name="nombreAsignatura" value="<?= htmlspecialchars($detalleAsignatura['nombreAsignatura'] ?? '') ?>">
+                <input type="hidden" name="usuarioId" value="1"> <!-- Cambiar por el ID del usuario logueado -->
+                <textarea name="comentario" placeholder="Escribe tu comentario aquí..." required></textarea>
+                <button type="submit">Publicar comentario</button>
+            </form>
             
             <div style="margin-top: 20px; text-align: center;">
                 <a href="ConsultaComentarios.php" class="btn-ver-comentarios">Ver todos los comentarios</a>

@@ -62,7 +62,7 @@ $carreraIdBuscado = 2; // ID específico para Sistemas
     </div>
     <script>
         function verDetalles(codigo) {
-            window.location.href = "DetallesAsignatura.php?codigo=" + codigo;
+            window.location.href = "DescripcionAsignaturas.php?codigo=" + codigo;
         }
     </script>
 </body>

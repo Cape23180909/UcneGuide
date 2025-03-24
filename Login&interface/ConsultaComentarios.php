@@ -1,16 +1,40 @@
 <?php
 $apiUrl = "https://api-ucne-emfugwekcfefc3ef.eastus-01.azurewebsites.net/api/Comentarios";
+$apiDocentesUrl = "https://api-ucne-emfugwekcfefc3ef.eastus-01.azurewebsites.net/api/Docentes";
+$apiAsignaturasUrl = "https://api-ucne-emfugwekcfefc3ef.eastus-01.azurewebsites.net/api/Asignaturas";
 $comentarios = [];
+$error = null;
 
-try {
-    $ch = curl_init($apiUrl);
+// Función para obtener datos de la API
+function obtenerDatosAPI($url) {
+    $ch = curl_init($url);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
     $response = curl_exec($ch);
     curl_close($ch);
+    return json_decode($response, true) ?: [];
+}
+
+// Función para obtener el nombre del docente
+function obtenerNombreDocente($docenteId, $apiDocentesUrl) {
+    if (empty($docenteId)) return "No asignado";
     
-    if ($response === false) throw new Exception("Error al obtener comentarios.");
-    $comentarios = json_decode($response, true) ?: [];
+    $docenteData = obtenerDatosAPI($apiDocentesUrl . "/" . urlencode($docenteId));
+    return $docenteData['nombre'] ?? "No asignado";
+}
+
+// Función para obtener el nombre de la asignatura
+function obtenerNombreAsignatura($asignaturaId, $apiAsignaturasUrl) {
+    if (empty($asignaturaId)) return "No asignada";
+    
+    $asignaturaData = obtenerDatosAPI($apiAsignaturasUrl . "/" . urlencode($asignaturaId));
+    return $asignaturaData['nombreAsignatura'] ?? "No asignada";
+}
+
+// Obtener comentarios
+try {
+    $comentarios = obtenerDatosAPI($apiUrl);
+    if (!is_array($comentarios)) throw new Exception("Formato de datos incorrecto");
 } catch (Exception $e) {
     error_log("Error API: " . $e->getMessage());
     $error = "No se pudieron cargar los comentarios.";
@@ -28,8 +52,6 @@ try {
 </head>
 <body>
     <div class="navbar">
-        <a href="Menu.php" class="back-link">
-        </a>
         <button onclick="window.location.href='Menu.php'" class="logo-button">
             <img src="/Imagenes/guia-turistico 3.png" alt="Logo">
         </button>
@@ -42,31 +64,31 @@ try {
             <div class="alert alert-success">Comentario guardado exitosamente!</div>
         <?php endif; ?>
         
-        <?php if (isset($error)): ?>
-            <div class="alert alert-danger"><?= $error ?></div>
+        <?php if ($error): ?>
+            <div class="alert alert-danger"><?= htmlspecialchars($error) ?></div>
         <?php elseif (empty($comentarios)): ?>
             <div class="alert alert-warning">No hay comentarios registrados.</div>
         <?php else: ?>
             <div class="table-responsive">
                 <table class="styled-table">
-                <thead>
-    <tr>
-        <th>Fecha</th>
-        <th>Docente</th>
-        <th>Asignatura</th>
-        <th>Comentario</th>
-    </tr>
-</thead>
-<tbody>
-    <?php foreach ($comentarios as $comentario): ?>
-        <tr>
-            <td><?= htmlspecialchars($comentario['fechaComentario'] ?? 'N/A') ?></td>
-            <td><?= htmlspecialchars($comentario['nombre'] ?? $comentario['docenteId'] ?? 'N/A') ?></td>
-            <td><?= htmlspecialchars($comentario['nombreAsignatura'] ?? 'N/A') ?></td>
-            <td><?= htmlspecialchars($comentario['comentario'] ?? 'N/A') ?></td>
-        </tr>
-    <?php endforeach; ?>
-</tbody>
+                    <thead>
+                        <tr>
+                            <th>Fecha</th>
+                            <th>Docente</th>
+                            <th>Asignatura</th>
+                            <th>Comentario</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php foreach ($comentarios as $comentario): ?>
+                            <tr>
+                                <td><?= htmlspecialchars($comentario['fechaComentario'] ?? 'N/A') ?></td>
+                                <td><?= htmlspecialchars(obtenerNombreDocente($comentario['docenteId'] ?? null, $apiDocentesUrl)) ?></td>
+                                <td><?= htmlspecialchars(obtenerNombreAsignatura($comentario['asignaturaId'] ?? null, $apiAsignaturasUrl)) ?></td>
+                                <td><?= htmlspecialchars($comentario['comentario'] ?? 'N/A') ?></td>
+                            </tr>
+                        <?php endforeach; ?>
+                    </tbody>
                 </table>
             </div>
         <?php endif; ?>
