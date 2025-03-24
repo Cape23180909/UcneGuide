@@ -1,3 +1,38 @@
+<?php
+$codigoAsignatura = $_GET['codigo'] ?? '';
+$apiBaseUrl = "https://api-ucne-emfugwekcfefc3ef.eastus-01.azurewebsites.net/api/Asignaturas";
+$apiDocentesUrl = "https://api-ucne-emfugwekcfefc3ef.eastus-01.azurewebsites.net/api/Docentes";
+
+// Función para obtener datos de la API
+function obtenerDatosAPI($url) {
+    $ch = curl_init($url);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+    $response = curl_exec($ch);
+    curl_close($ch);
+    return json_decode($response, true) ?: [];
+}
+
+// Función para obtener el nombre del docente
+function obtenerNombreDocente($docenteId, $apiDocentesUrl) {
+    if (empty($docenteId)) return null;
+    
+    $docenteUrl = $apiDocentesUrl . "/" . $docenteId;
+    $docenteData = obtenerDatosAPI($docenteUrl);
+    return $docenteData['nombre'] ?? null;
+}
+
+// Obtener datos de asignatura
+$asignaturas = obtenerDatosAPI($apiBaseUrl);
+$detalleAsignatura = [];
+
+foreach ($asignaturas as $asignatura) {
+    if ($asignatura['codigoAsignatura'] === $codigoAsignatura) {
+        $detalleAsignatura = $asignatura;
+        break;
+    }
+}
+?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -5,80 +40,47 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Detalles de la Asignatura</title>
     <link rel="stylesheet" href="DescripcionAsignaturas.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-    <!-- Barra de navegación -->
     <div class="navbar">
-        <a href="Menu.php">
+        <a href="Menu.php" class="logo-button">
             <img src="/Imagenes/guia-turistico 3.png" alt="Logo" class="logo">
         </a>
         <span class="title">Detalles de la asignatura</span>
     </div>
 
     <div class="container">
-        <?php
-        $codigoAsignatura = $_GET['codigo'] ?? '';
-        $apiBaseUrl = "https://api-ucne-emfugwekcfefc3ef.eastus-01.azurewebsites.net/api/Asignaturas";
-        $apiDocentesUrl = "https://api-ucne-emfugwekcfefc3ef.eastus-01.azurewebsites.net/api/Docentes"; // URL de la API de docentes
-
-        // Función para obtener datos de la API
-        function obtenerDatosAPI($url) {
-            $ch = curl_init($url);
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-            $response = curl_exec($ch);
-            curl_close($ch);
-            return json_decode($response, true) ?: [];
-        }
-
-        // Función para obtener el nombre del docente desde la API
-        function obtenerNombreDocente($docenteId, $apiDocentesUrl) {
-            if (empty($docenteId)) {
-                return null; // Si no hay ID, devuelve null
-            }
-
-            // Hacer la solicitud a la API de docentes
-            $docenteUrl = $apiDocentesUrl . "/" . $docenteId;
-            $docenteData = obtenerDatosAPI($docenteUrl);
-
-            // Verificar si se obtuvo el nombre del docente
-            return $docenteData['nombre'] ?? null;
-        }
-
-        // Obtener todas las asignaturas
-        $asignaturas = obtenerDatosAPI($apiBaseUrl);
-        $detalleAsignatura = [];
-
-        // Buscar la asignatura específica por su código
-        foreach ($asignaturas as $asignatura) {
-            if ($asignatura['codigoAsignatura'] === $codigoAsignatura) {
-                $detalleAsignatura = $asignatura;
-                break;
-            }
-        }
-        ?>
-
-        <!-- Detalles de la asignatura -->
         <div class="section">
             <h2><?= htmlspecialchars($detalleAsignatura['nombreAsignatura'] ?? "Asignatura no encontrada") ?></h2>
             <p><strong>Código:</strong> <?= htmlspecialchars($detalleAsignatura['codigoAsignatura'] ?? "N/A") ?></p>
             <p><strong>Descripción:</strong> <?= nl2br(htmlspecialchars($detalleAsignatura['descripcionAsignatura'] ?? "Sin descripción")) ?></p>
         </div>
 
-        <!-- Docentes -->
         <div class="section">
             <h3>Docente:</h3>
             <p><?= htmlspecialchars(obtenerNombreDocente($detalleAsignatura['docenteId'] ?? null, $apiDocentesUrl) ?? "No asignado") ?></p>
         </div>
 
-        <!-- Comentarios -->
         <div class="section comentarios">
-            <h3>Comentarios</h3>
+            <h3>Agregar Comentario</h3>
+            
+            <?php if (!empty($_GET['success'])): ?>
+                <div class="alert alert-success">¡Comentario enviado correctamente!</div>
+            <?php endif; ?>
+            
             <form action="guardar_comentario.php" method="post">
-                <input type="hidden" name="codigoAsignatura" value="<?= htmlspecialchars($codigoAsignatura) ?>">
-                <textarea name="comentario" placeholder="Escribe tu comentario" required></textarea>
-                <button type="submit">Comentar</button>
-            </form>
+    <input type="hidden" name="nombreAsignatura" value="<?= htmlspecialchars($detalleAsignatura['nombreAsignatura'] ?? '') ?>">
+    <input type="hidden" name="docenteId" value="<?= htmlspecialchars($detalleAsignatura['docenteId'] ?? '') ?>">
+    <input type="hidden" name="nombreDocente" value="<?= htmlspecialchars(obtenerNombreDocente($detalleAsignatura['docenteId'] ?? null, $apiDocentesUrl) ?? '') ?>">
+    <input type="hidden" name="usuarioId" value="0"> <!-- Reemplaza con el ID del usuario si está disponible -->
+    <textarea name="comentario" placeholder="Escribe tu comentario aquí..." required></textarea>
+    <button type="submit">Publicar comentario</button>
+</form>
+            
+            <div style="margin-top: 20px; text-align: center;">
+                <a href="ConsultaComentarios.php" class="btn-ver-comentarios">Ver todos los comentarios</a>
+            </div>
         </div>
     </div>
 </body>
