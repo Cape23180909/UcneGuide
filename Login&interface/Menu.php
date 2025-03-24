@@ -87,12 +87,14 @@ $enlaceAsignaturas = obtenerEnlaceAsignaturas($carreraId);
                 <span>Asignaturas</span>
             </div>
         </a>
-
+        
+        <a href="Comentarios.php" class="menu-link">
         <div class="menu-item">
             <img src="/Imagenes/Subgerencias.png" alt="Sugerencias" class="menu-icon">
             <span>Comentarios</span>
         </div>
-        
+        </a>
+
         <nav class="menu container">
         <div class="menu-item">
         <a href="Docentes.php" class="menu-link">

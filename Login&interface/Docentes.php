@@ -1,7 +1,41 @@
 <?php
-// Obtener datos de la API
+session_start();
+session_regenerate_id(true); // Protege contra secuestro de sesión
+
+// Verificar que el usuario está autenticado
+if (!isset($_SESSION['authToken'])) {
+    header('Location: Login.php');
+    exit();
+}
+
+// Obtener carreraId del usuario autenticado
+$carreraId = $_SESSION['usuario']['carreraId'] ?? null;
+
+// Verificación de seguridad
+if (is_null($carreraId)) {
+    die("Error: No se ha identificado la carrera del usuario.");
+}
+
+// Obtener datos de la API de manera segura
 $apiUrl = "https://api-ucne-emfugwekcfefc3ef.eastus-01.azurewebsites.net/api/Docentes";
-$maestros = @json_decode(file_get_contents($apiUrl), true) ?: [];
+$maestros = [];
+
+try {
+    $response = file_get_contents($apiUrl);
+    if ($response === false) {
+        throw new Exception("Error al obtener datos de la API.");
+    }
+    $maestros = json_decode($response, true);
+} catch (Exception $e) {
+    error_log("Error en API: " . $e->getMessage());
+    die("Error al cargar los docentes. Intente más tarde.");
+}
+
+// Filtrar docentes solo de la carrera del usuario
+$maestrosFiltrados = array_filter($maestros, function ($docente) use ($carreraId) {
+    return isset($docente['carreraId']) && $docente['carreraId'] == $carreraId;
+});
+
 ?>
 
 <!DOCTYPE html>
@@ -13,7 +47,8 @@ $maestros = @json_decode(file_get_contents($apiUrl), true) ?: [];
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="Docentes.css">
     <script>
-        const maestrosData = <?= json_encode($maestros) ?>;
+        // Enviar los docentes filtrados al frontend
+        const maestrosData = <?= json_encode(array_values($maestrosFiltrados)) ?>;
     </script>
 </head>
 <body>
