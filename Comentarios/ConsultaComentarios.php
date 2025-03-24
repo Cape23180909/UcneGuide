@@ -31,7 +31,7 @@ try {
     <a href="Menu.php" class="back-link">
         <i class="fas fa-arrow-left"></i>
     </a>
-    <button onclick="window.location.href='componente-x.php'" class="logo-button">
+    <button onclick="window.location.href='Menu.php'" class="logo-button">
         <img src="/Imagenes/guia-turistico 3.png" alt="Logo">
     </button>
 </div>
