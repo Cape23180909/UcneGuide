@@ -49,24 +49,24 @@ try {
         <?php else: ?>
             <div class="table-responsive">
                 <table class="styled-table">
-                    <thead>
-                        <tr>
-                            <th>Fecha</th>
-                            <th>Docente</th>
-                            <th>Asignatura</th>
-                            <th>Comentario</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php foreach ($comentarios as $comentario): ?>
-                            <tr>
-                                <td><?= htmlspecialchars($comentario['fecha'] ?? 'N/A') ?></td>
-                                <td><?= htmlspecialchars($comentario['nombreDocente'] ?? $comentario['docenteId'] ?? 'N/A') ?></td>
-                                <td><?= htmlspecialchars($comentario['nombreAsignatura'] ?? $comentario['asignaturaId'] ?? 'N/A') ?></td>
-                                <td><?= htmlspecialchars($comentario['comentario'] ?? 'N/A') ?></td>
-                            </tr>
-                        <?php endforeach; ?>
-                    </tbody>
+                <thead>
+    <tr>
+        <th>Fecha</th>
+        <th>Docente</th>
+        <th>Asignatura</th>
+        <th>Comentario</th>
+    </tr>
+</thead>
+<tbody>
+    <?php foreach ($comentarios as $comentario): ?>
+        <tr>
+            <td><?= htmlspecialchars($comentario['fechaComentario'] ?? 'N/A') ?></td>
+            <td><?= htmlspecialchars($comentario['nombre'] ?? $comentario['docenteId'] ?? 'N/A') ?></td>
+            <td><?= htmlspecialchars($comentario['nombreAsignatura'] ?? 'N/A') ?></td>
+            <td><?= htmlspecialchars($comentario['comentario'] ?? 'N/A') ?></td>
+        </tr>
+    <?php endforeach; ?>
+</tbody>
                 </table>
             </div>
         <?php endif; ?>
