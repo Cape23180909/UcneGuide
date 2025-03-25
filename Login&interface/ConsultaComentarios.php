@@ -59,7 +59,7 @@ try {
 
     <div class="container">
         <header>Consulta de Comentarios</header>
-        <a href="/Cotizacion/Create" class="button-Create ">
+        <a href="CreateComentarios.php" class="button-Create ">
                 <span class="bi bi-plus-square mt-3"></span> Crear
             </a>
         
