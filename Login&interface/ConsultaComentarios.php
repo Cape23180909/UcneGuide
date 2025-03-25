@@ -59,6 +59,9 @@ try {
 
     <div class="container">
         <header>Consulta de Comentarios</header>
+        <a href="/Cotizacion/Create" class="button-Create ">
+                <span class="bi bi-plus-square mt-3"></span> Crear
+            </a>
         
         <?php if (isset($_GET['success'])): ?>
             <div class="alert alert-success">Comentario guardado exitosamente!</div>
