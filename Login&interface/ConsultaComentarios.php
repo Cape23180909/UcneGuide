@@ -1,4 +1,15 @@
 <?php
+session_start();
+
+// Verificar si el usuario está logueado
+if (!isset($_SESSION['usuario'])) {
+    header('Location: Login.php?error=no_autenticado');
+    exit();
+}
+
+// Obtener el ID del usuario logueado
+$usuarioId = $_SESSION['usuario']['usuarioId'];
+
 $apiUrl = "https://api-ucne-emfugwekcfefc3ef.eastus-01.azurewebsites.net/api/Comentarios";
 $apiDocentesUrl = "https://api-ucne-emfugwekcfefc3ef.eastus-01.azurewebsites.net/api/Docentes";
 $apiAsignaturasUrl = "https://api-ucne-emfugwekcfefc3ef.eastus-01.azurewebsites.net/api/Asignaturas";
@@ -11,35 +22,79 @@ function obtenerDatosAPI($url) {
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
     $response = curl_exec($ch);
+    
+    if (curl_errno($ch)) {
+        throw new Exception('Error en la conexión: ' . curl_error($ch));
+    }
+    
+    $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
     curl_close($ch);
-    return json_decode($response, true) ?: [];
+    
+    if ($httpCode !== 200) {
+        throw new Exception("La API respondió con código $httpCode");
+    }
+    
+    $data = json_decode($response, true);
+    
+    if (json_last_error() !== JSON_ERROR_NONE) {
+        throw new Exception('Error decodificando JSON: ' . json_last_error_msg());
+    }
+    
+    return $data;
 }
 
 // Función para obtener el nombre del docente
 function obtenerNombreDocente($docenteId, $apiDocentesUrl) {
     if (empty($docenteId)) return "No asignado";
     
-    $docenteData = obtenerDatosAPI($apiDocentesUrl . "/" . urlencode($docenteId));
-    return $docenteData['nombre'] ?? "No asignado";
+    try {
+        $docenteData = obtenerDatosAPI($apiDocentesUrl . "/" . urlencode($docenteId));
+        return $docenteData['nombre'] ?? "No asignado";
+    } catch (Exception $e) {
+        error_log("Error obteniendo docente: " . $e->getMessage());
+        return "Error al cargar";
+    }
 }
 
 // Función para obtener el nombre de la asignatura
 function obtenerNombreAsignatura($asignaturaId, $apiAsignaturasUrl) {
     if (empty($asignaturaId)) return "No asignada";
     
-    $asignaturaData = obtenerDatosAPI($apiAsignaturasUrl . "/" . urlencode($asignaturaId));
-    return $asignaturaData['nombreAsignatura'] ?? "No asignada";
+    try {
+        $asignaturaData = obtenerDatosAPI($apiAsignaturasUrl . "/" . urlencode($asignaturaId));
+        return $asignaturaData['nombreAsignatura'] ?? "No asignada";
+    } catch (Exception $e) {
+        error_log("Error obteniendo asignatura: " . $e->getMessage());
+        return "Error al cargar";
+    }
 }
 
-// Obtener comentarios
+// Obtener y filtrar comentarios
 try {
-    $comentarios = obtenerDatosAPI($apiUrl);
-    if (!is_array($comentarios)) throw new Exception("Formato de datos incorrecto");
+    // Obtener todos los comentarios
+    $todosComentarios = obtenerDatosAPI($apiUrl);
+    
+    // Filtrar solo los comentarios del usuario logueado
+    $comentarios = array_filter($todosComentarios, function($comentario) use ($usuarioId) {
+        return isset($comentario['usuarioId']) && $comentario['usuarioId'] == $usuarioId;
+    });
+    
+    // Reindexar el array
+    $comentarios = array_values($comentarios);
+    
+    // Obtener nombres de docentes y asignaturas para cada comentario
+    foreach ($comentarios as &$comentario) {
+        $comentario['nombreDocente'] = obtenerNombreDocente($comentario['docenteId'] ?? null, $apiDocentesUrl);
+        $comentario['nombreAsignatura'] = obtenerNombreAsignatura($comentario['asignaturaId'] ?? null, $apiAsignaturasUrl);
+    }
+    unset($comentario); // Romper la referencia
+    
 } catch (Exception $e) {
-    error_log("Error API: " . $e->getMessage());
-    $error = "No se pudieron cargar los comentarios.";
+    error_log("Error al cargar comentarios: " . $e->getMessage());
+    $error = "No se pudieron cargar los comentarios. Por favor intenta más tarde.";
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -80,6 +135,8 @@ try {
                             <th>Docente</th>
                             <th>Asignatura</th>
                             <th>Comentario</th>
+                            <th>Editar</th>
+                            <th>Eliminar</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -89,6 +146,8 @@ try {
                                 <td><?= htmlspecialchars(obtenerNombreDocente($comentario['docenteId'] ?? null, $apiDocentesUrl)) ?></td>
                                 <td><?= htmlspecialchars(obtenerNombreAsignatura($comentario['asignaturaId'] ?? null, $apiAsignaturasUrl)) ?></td>
                                 <td><?= htmlspecialchars($comentario['comentario'] ?? 'N/A') ?></td>
+                                <td><a href='Edit_proveedor.php?id=".$id."' class='btn btn-primary'>Editar</a></td>
+                                <td><a href='Delete_proveedor.php?id=".$id."' class='btn btn-danger'>Eliminar</a></td>
                             </tr>
                         <?php endforeach; ?>
                     </tbody>
