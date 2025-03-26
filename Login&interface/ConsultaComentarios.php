@@ -146,8 +146,8 @@ try {
                                 <td><?= htmlspecialchars(obtenerNombreDocente($comentario['docenteId'] ?? null, $apiDocentesUrl)) ?></td>
                                 <td><?= htmlspecialchars(obtenerNombreAsignatura($comentario['asignaturaId'] ?? null, $apiAsignaturasUrl)) ?></td>
                                 <td><?= htmlspecialchars($comentario['comentario'] ?? 'N/A') ?></td>
-                                <td><a href='Edit_proveedor.php?id=".$id."' class='btn btn-primary'>Editar</a></td>
-                                <td><a href='Delete_proveedor.php?id=".$id."' class='btn btn-danger'>Eliminar</a></td>
+                                <td><a href='EditComentarios.php?id=<?= htmlspecialchars($comentario['comentarioId']) ?>' class='btn btn-primary'>Editar</a></td>
+                                <td><a href='DeleteComentarios.php?id=<?= htmlspecialchars($comentario['comentarioId']) ?>' class='btn btn-danger'>Eliminar</a></td>
                             </tr>
                         <?php endforeach; ?>
                     </tbody>
