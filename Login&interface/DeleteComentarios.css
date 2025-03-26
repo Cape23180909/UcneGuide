@@ -1,0 +1,244 @@
+:root {
+    --primary-color: #023E8A;
+    --secondary-color: #0077B6;
+    --danger-color: #E63946;
+    --light-color: #F8F9FA;
+    --dark-color: #212529;
+}
+
+/* Estilos para la barra superior */
+.navbar {
+    width: 100%;
+    background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+    color: white;
+    display: flex;
+    align-items: center;
+    padding: 15px 30px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 80px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+}
+
+.logo-button {
+    background: transparent;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    width: 60px;
+    height: 60px;
+    transition: transform 0.3s ease;
+}
+
+.logo-button:hover {
+    transform: scale(1.05);
+}
+
+.logo-button img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.navbar-title {
+    font-size: 1.2em;
+    font-weight: 500;
+    margin-left: 15px;
+}
+
+/* Contenedor principal */
+.main-container {
+    width: 100%;
+    padding-top: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 100px 20px 20px;
+    box-sizing: border-box;
+}
+
+/* Estilos para el contenido de confirmación */
+.confirmation-container {
+    max-width: 600px;
+    width: 100%;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+.confirmation-header {
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    color: white;
+    padding: 1.5rem;
+    text-align: center;
+}
+
+.confirmation-icon {
+    font-size: 3rem;
+    color: var(--danger-color);
+    margin-bottom: 1rem;
+    animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}
+
+.confirmation-header h3 {
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.confirmation-header p {
+    opacity: 0.9;
+}
+
+.confirmation-body {
+    padding: 2rem;
+}
+
+.comment-details {
+    background-color: var(--light-color);
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    border-left: 4px solid var(--primary-color);
+}
+
+.detail-item {
+    margin-bottom: 0.8rem;
+    display: flex;
+}
+
+.detail-label {
+    font-weight: 600;
+    color: var(--primary-color);
+    min-width: 100px;
+}
+
+.comment-content {
+    background: white;
+    border: 1px solid #E9ECEF;
+    border-radius: 8px;
+    padding: 1rem;
+    margin-top: 1rem;
+    font-style: italic;
+    line-height: 1.6;
+    white-space: pre-line;
+}
+
+.action-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 1rem;
+}
+
+.btn {
+    padding: 0.8rem 1.5rem;
+    font-weight: 500;
+    transition: all 0.3s;
+    border: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+}
+
+.btn-confirm {
+    background-color: var(--danger-color);
+    color: white;
+}
+
+.btn-confirm:hover {
+    background-color: #C1121F;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.btn-secondary {
+    background-color: #6C757D;
+    color: white;
+}
+
+.btn-secondary:hover {
+    background-color: #5A6268;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.btn-back {
+    background-color: var(--primary-color);
+    color: white;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.btn-back:hover {
+    background-color: #012A5E;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    color: white;
+}
+
+.bi {
+    margin-right: 0.5rem;
+}
+
+.alert-danger {
+    background-color: #f8d7da;
+    color: #721c24;
+    padding: 1rem;
+    border-radius: 8px;
+    margin-bottom: 1.5rem;
+    border: 1px solid #f5c6cb;
+}
+
+/* Responsividad */
+@media (max-width: 768px) {
+    .navbar {
+        height: 70px;
+        padding: 10px 20px;
+    }
+    
+    .logo-button {
+        width: 50px;
+        height: 50px;
+    }
+    
+    .main-container {
+        padding-top: 90px;
+    }
+}
+
+@media (max-width: 576px) {
+    .action-buttons {
+        flex-direction: column;
+    }
+    
+    .btn {
+        width: 100%;
+    }
+    
+    .detail-item {
+        flex-direction: column;
+    }
+    
+    .detail-label {
+        min-width: auto;
+        margin-bottom: 0.3rem;
+    }
+    
+    .confirmation-body {
+        padding: 1.5rem;
+    }
+}
