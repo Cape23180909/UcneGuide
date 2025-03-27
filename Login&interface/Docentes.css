@@ -38,10 +38,6 @@ body {
     box-shadow: 0 2px 8px rgba(7, 71, 136, 0.2);
 }
 
-.logo-button:hover {
-    transform: scale(1.05) rotate(-5deg);
-}
-
 .academic-container {
     background: var(--blanco);
     border-radius: 24px;

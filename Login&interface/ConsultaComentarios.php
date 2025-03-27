@@ -115,7 +115,7 @@ try {
     <div class="container">
         <header>Consulta de Comentarios</header>
         <a href="CreateComentarios.php" class="button-Create ">
-                <span class="bi bi-plus-square mt-3"></span> Crear
+                <span class="fas fa-plus-square"></span> Crear
             </a>
         
         <?php if (isset($_GET['success'])): ?>

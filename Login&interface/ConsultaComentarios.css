@@ -117,43 +117,54 @@ header {
     object-fit: contain;
 }
 
-.logo-button:hover {
-    transform: scale(1.1);
-    transition: transform 0.2s;
-}
-
 /*IMplementacion del boton crear*/
 .button-Create {
     display: inline-flex;
     align-items: center;
-    background-color: #28a745;
+    justify-content: center;
+    background: linear-gradient(135deg, #28a745, #218838);
     color: white;
-    padding: 8px 16px;
-    border-radius: 4px;
+    padding: 10px 20px;
+    border-radius: 30px;
     text-decoration: none;
-    font-weight: 500;
-    transition: all 0.3s ease;
-    margin-bottom: 20px;
-    border: 1px solid transparent;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    font-weight: 600;
+    font-size: 1rem;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    border: none;
+    box-shadow: 0 4px 8px rgba(40, 167, 69, 0.2);
+    cursor: pointer;
     float: right;
-    margin-left: 0px;
+    margin: 0 0 20px 20px;
+    gap: 8px;
 }
 
+/* Icono */
+.button-Create i.bi {
+    font-size: 1.2em;
+    display: inline-flex;
+    align-items: center;
+}
+
+/* Texto del botón */
+.button-Create span {
+    display: inline-block;
+}
+
+/* Efecto hover */
 .button-Create:hover {
-    background-color: #218838; /* Verde más oscuro al pasar el mouse */
-    color: white;
-    text-decoration: none;
-    transform: translateY(-1px);
-    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(40, 167, 69, 0.3);
+    background: linear-gradient(135deg, #218838, #28a745);
 }
 
+/* Efecto al hacer clic */
 .button-Create:active {
     transform: translateY(0);
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 4px rgba(40, 167, 69, 0.2);
 }
 
-.button-Create .bi-plus-square {
-    margin-right: 8px;
-    font-size: 1.2em;
+/* Efecto de "pulsación" en el icono */
+.button-Create:hover i.bi {
+    transform: scale(1.1);
+    transition: transform 0.3s ease;
 }
