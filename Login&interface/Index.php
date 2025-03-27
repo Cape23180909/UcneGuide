@@ -1,3 +1,8 @@
+<?php
+$segundos_espera = 10; // Ajusta el tiempo de carga aquí
+header("refresh:$segundos_espera; url=Login.php"); // Redireccionar a la pagina de Login.php
+?>
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -15,8 +20,3 @@
     </div>
 </body>
 </html>
-
-<?php
-$segundos_espera = 10; // Ajusta el tiempo de carga aquí
-header("refresh:$segundos_espera; url=Login.php"); // Redireccionar a la pagina de Login.php
-?>

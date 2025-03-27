@@ -1,43 +1,3 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
-    <link rel="stylesheet" href="Login.css">
-</head>
-<body>
-    <div class="top-bar"></div>
-    <div class="container">
-        <div class="header">
-            <img src="/Imagenes/guia-turistico 3.png" alt="Logo" class="logo">
-            <div class="wave"></div>
-        </div>
-
-        <div class="login-box">
-            <h2>Login</h2>
-            <form action="Login.php" method="POST">
-                <div class="input-group">
-                    <input type="email" placeholder="Email" name="email" required>
-                </div>
-                <div class="input-group">
-                    <input type="password" placeholder="Contraseña" name="password" required>
-                </div>
-                <button type="submit" class="login-btn">Login</button>
-            </form>
-            <a href="CreateUser.php" class="register-link">Crear cuenta</a>
-
-            <!-- Mensajes de error -->
-            <?php if (isset($_GET['error'])): ?>
-                <div class="error-message">
-                    <?php echo htmlspecialchars($_GET['error']); ?>
-                </div>
-            <?php endif; ?>
-        </div>
-    </div>
-</body>
-</html>
-
 <?php
 session_start();
 if (isset($_SESSION['usuario'])) {
@@ -109,3 +69,43 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     exit();
 }
 ?>
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="Login.css">
+</head>
+<body>
+    <div class="top-bar"></div>
+    <div class="container">
+        <div class="header">
+            <img src="/Imagenes/guia-turistico 3.png" alt="Logo" class="logo">
+            <div class="wave"></div>
+        </div>
+
+        <div class="login-box">
+            <h2>Login</h2>
+            <form action="Login.php" method="POST">
+                <div class="input-group">
+                    <input type="email" placeholder="Email" name="email" required>
+                </div>
+                <div class="input-group">
+                    <input type="password" placeholder="Contraseña" name="password" required>
+                </div>
+                <button type="submit" class="login-btn">Login</button>
+            </form>
+            <a href="CreateUser.php" class="register-link">Crear cuenta</a>
+
+            <!-- Mensajes de error -->
+            <?php if (isset($_GET['error'])): ?>
+                <div class="error-message">
+                    <?php echo htmlspecialchars($_GET['error']); ?>
+                </div>
+            <?php endif; ?>
+        </div>
+    </div>
+</body>
+</html>
