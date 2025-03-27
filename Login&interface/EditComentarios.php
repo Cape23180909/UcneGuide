@@ -124,10 +124,10 @@ error_log("Docentes por asignatura: " . json_encode(array_keys($docentesPorAsign
 </head>
 <body>
     <div class="navbar">
-        <button onclick="window.location.href='Menu.php'" class="logo-button">
+        <button onclick="window.location.href='ConsultaComentarios.php'" class="logo-button">
             <img src="/Imagenes/guia-turistico 3.png" alt="Logo">
         </button>
-        <span style="margin-left: 80px; font-size: 1.2em;">Editar Comentario</span>
+        <!-- <span style="margin-left: 80px; font-size: 1.2em;">Editar Comentario</span> -->
     </div>
     <div class="container">
         <div class="form-header">

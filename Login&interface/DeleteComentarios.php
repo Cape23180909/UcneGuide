@@ -97,7 +97,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['confirmar'])) {
 </head>
 <body>
     <div class="navbar">
-        <button onclick="window.location.href='Menu.php'" class="logo-button">
+        <button onclick="window.location.href='ConsultaComentarios.php'" class="logo-button">
             <img src="/Imagenes/guia-turistico 3.png" alt="Logo">
         </button>
     </div>
@@ -143,15 +143,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['confirmar'])) {
                         <button type="submit" name="confirmar" class="btn btn-confirm text-white">
                             <i class="bi bi-trash-fill me-2"></i>Confirmar Eliminación
                         </button>
-                        <a href="ConsultaComentarios.php" class="btn btn-secondary text-white">
-                            <i class="bi bi-x-circle-fill me-2"></i>Cancelar
-                        </a>
                     </div>
                 </form>
             </div>
         </div>
     </div>
-
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
