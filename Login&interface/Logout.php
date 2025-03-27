@@ -16,8 +16,12 @@
             <div class="sub-message">¡Hasta pronto!</div>
         </div>
         <div class="button-container">
-    <a href="Menu.php" class="back-btn">Volver</a>
-    <a href="Login.php" class="logout-btn">Confirmar logout</a>
+            <a href="Menu.php" class="btn back-btn">
+                <i class="fas fa-arrow-left"></i> Volver
+            </a>
+            <a href="Login.php" class="btn logout-btn">
+                <i class="fas fa-sign-out-alt"></i> Confirmar logout
+            </a>
         </div>
     </div>
 </body>
