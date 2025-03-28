@@ -10,6 +10,7 @@ header("refresh:$segundos_espera; url=Login.php"); // Redireccionar a la pagina 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cargando...</title>
     <link rel="stylesheet" href="Index.css">
+    <link rel="Icon" href="/Imagenes/guia-turistico 3.png">
 </head>
 <body>
     <div class="loading-container">

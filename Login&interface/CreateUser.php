@@ -65,6 +65,7 @@ $facultades = obtenerDatosAPI("https://api-ucne-emfugwekcfefc3ef.eastus-01.azure
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registrar Usuario</title>
     <link rel="stylesheet" href="CreateUser.css">
+    <link rel="Icon" href="/Imagenes/guia-turistico 3.png">
 </head>
 <body>
     <div class="top-bar"></div>

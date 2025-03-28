@@ -49,6 +49,7 @@ $enlaceAsignaturas = obtenerEnlaceAsignaturas($carreraId);
     <title>Menú</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="menu.css">
+    <link rel="Icon" href="/Imagenes/guia-turistico 3.png">
 </head>
     <!-- Encabezado -->
     <header class="menu-header">

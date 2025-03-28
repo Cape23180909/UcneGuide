@@ -46,6 +46,7 @@ $maestrosFiltrados = array_filter($maestros, function ($docente) use ($carreraId
     <title>Gestor de Docentes</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="Docentes.css">
+    <link rel="Icon" href="/Imagenes/guia-turistico 3.png">
     <script>
         // Enviar los docentes filtrados al frontend
         const maestrosData = <?= json_encode(array_values($maestrosFiltrados)) ?>;

@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cerrar sesión</title>
     <link rel="stylesheet" href="logout.css">
+    <link rel="Icon" href="/Imagenes/guia-turistico 3.png">
 </head>
 <body>
     <div class="logout-container">
