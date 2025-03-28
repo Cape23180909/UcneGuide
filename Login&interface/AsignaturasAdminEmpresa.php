@@ -22,7 +22,6 @@ if ($httpCode !== 200 || !is_array($asignaturas)) {
 $carreraIdBuscado = 4; // ID específico para Sistemas
 ?>
 
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
