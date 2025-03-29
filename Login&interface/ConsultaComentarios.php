@@ -143,7 +143,7 @@ try {
                     <tbody>
                         <?php foreach ($comentarios as $comentario): ?>
                             <tr>
-                                <td><?= htmlspecialchars($comentario['fechaComentario'] ?? 'N/A') ?></td>
+                                <td><?= htmlspecialchars(isset($comentario['fechaComentario']) ? date('d/m/20y', strtotime($comentario['fechaComentario'])) : 'N/A') ?></td>
                                 <td><?= htmlspecialchars(obtenerNombreDocente($comentario['docenteId'] ?? null, $apiDocentesUrl)) ?></td>
                                 <td><?= htmlspecialchars(obtenerNombreAsignatura($comentario['asignaturaId'] ?? null, $apiAsignaturasUrl)) ?></td>
                                 <td><?= htmlspecialchars($comentario['comentario'] ?? 'N/A') ?></td>
