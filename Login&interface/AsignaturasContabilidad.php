@@ -28,7 +28,7 @@ $carreraIdBuscado = 11; // ID específico para Sistemas
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Asignaturas Contabilidad</title>
-    <link rel="stylesheet" href="MateriasSistemas.css">
+    <link rel="stylesheet" href="AsignaturasContabilidad.css">
     <link rel="Icon" href="/Imagenes/guia-turistico 3.png">
 </head>
 <body>
