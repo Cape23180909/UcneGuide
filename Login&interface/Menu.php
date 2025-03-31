@@ -75,7 +75,6 @@ $enlaceAsignaturas = obtenerEnlaceAsignaturas($carreraId);
         </a>
     </div>
 </div>
-
         </div>
         </div>
     </header>

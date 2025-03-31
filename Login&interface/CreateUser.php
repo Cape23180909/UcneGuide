@@ -1,7 +1,7 @@
 <?php
-session_start(); // Debe ser lo PRIMERO en el archivo
+session_start();
 
-// Procesar el formulario antes de cualquier HTML
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Validación de contraseñas (también en servidor aunque esté en JS)
     if ($_POST['password'] !== $_POST['confirm_password']) {
@@ -14,7 +14,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $data = [
         'nombre' => $_POST['nombre'],
         'email' => $_POST['email'],
-        'password' => $_POST['password'], // Deberías hashear esto si la API lo requiere
+        'password' => $_POST['password'],
         'carreraId' => (int)$_POST['carreraId'],
         'facultadId' => (int)$_POST['facultadId']
     ];

@@ -84,13 +84,6 @@ $payload = [
 if (!empty($password)) {
     // Si la API espera texto plano:
     $payload['password'] = $password; 
-    
-    // O si requiere confirmación de contraseña actual:
-    // $payload = [
-    //     'nuevaPassword' => $password,
-    //     'confirmacionPassword' => $_POST['confirm_password'],
-    //     'passwordActual' => $_POST['current_password'] // Agregar campo en el formulario
-    // ];
 }
 
     // Enviar actualización a la API
