@@ -171,7 +171,7 @@ $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
                     </div>
 
                     <div class="input-group">
-                        <label for="password">Nueva Contraseña (dejar en blanco para no cambiar)</label>
+                        <label for="password">Nueva Contraseña (Si vas a actualizar debes colocar una nueva)</label>
                         <input type="password" id="password" name="password">
                     </div>
 
@@ -218,22 +218,116 @@ $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
     </div>
 
     <script>
-        function validarFormulario() {
-            const password = document.getElementById("password").value;
-            const confirmPassword = document.getElementById("confirm-password").value;
-            
-            if (password !== confirmPassword) {
-                alert("Las contraseñas no coinciden");
-                return false;
-            }
-            
-            if (password.length > 0 && password.length < 8) {
-                alert("La contraseña debe tener al menos 8 caracteres");
-                return false;
-            }
-            
-            return true;
+    function validarFormulario() {
+        // Obtener elementos
+        const nombre = document.getElementById("nombre");
+        const email = document.getElementById("email");
+        const password = document.getElementById("password");
+        const confirmPassword = document.getElementById("confirm-password");
+        const carreraId = document.getElementById("carreraId");
+        const facultadId = document.getElementById("facultadId");
+        
+        // Validar nombre
+        if (nombre.value.trim() === "") {
+            mostrarError(nombre, "El nombre es obligatorio");
+            return false;
+        } else {
+            quitarError(nombre);
         }
-    </script>
+        
+        // Validar email
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email.value)) {
+            mostrarError(email, "Ingrese un email válido");
+            return false;
+        } else {
+            quitarError(email);
+        }
+        
+        // Validar contraseñas
+        if (password.value !== confirmPassword.value) {
+            mostrarError(password, "Las contraseñas no coinciden");
+            mostrarError(confirmPassword, "Las contraseñas no coinciden");
+            return false;
+        } else {
+            quitarError(password);
+            quitarError(confirmPassword);
+        }
+        
+        if (password.value.length > 0 && password.value.length < 8) {
+            mostrarError(password, "La contraseña debe tener al menos 8 caracteres");
+            return false;
+        } else if (password.value.length > 0) {
+            quitarError(password);
+        }
+        
+        // Validar selects
+        if (carreraId.value === "") {
+            mostrarError(carreraId, "Seleccione una carrera");
+            return false;
+        } else {
+            quitarError(carreraId);
+        }
+        
+        if (facultadId.value === "") {
+            mostrarError(facultadId, "Seleccione una facultad");
+            return false;
+        } else {
+            quitarError(facultadId);
+        }
+        
+        return true;
+    }
+    
+    function mostrarError(elemento, mensaje) {
+        // Remover cualquier mensaje de error existente
+        quitarError(elemento);
+        
+        // Crear elemento de error
+        const errorDiv = document.createElement("div");
+        errorDiv.className = "error-message";
+        errorDiv.textContent = mensaje;
+        errorDiv.style.color = "#ff4444";
+        errorDiv.style.fontSize = "0.8em";
+        errorDiv.style.marginTop = "5px";
+        
+        // Insertar después del elemento
+        elemento.parentNode.appendChild(errorDiv);
+        
+        // Resaltar el campo con error
+        elemento.style.borderColor = "#ff4444";
+    }
+    
+    function quitarError(elemento) {
+        // Quitar borde rojo
+        elemento.style.borderColor = "";
+        
+        // Eliminar mensaje de error si existe
+        const errorDiv = elemento.parentNode.querySelector(".error-message");
+        if (errorDiv) {
+            elemento.parentNode.removeChild(errorDiv);
+        }
+    }
+    
+    // Validación en tiempo real para algunos campos
+    document.getElementById("email").addEventListener("blur", function() {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(this.value)) {
+            mostrarError(this, "Ingrese un email válido");
+        } else {
+            quitarError(this);
+        }
+    });
+    
+    document.getElementById("confirm-password").addEventListener("input", function() {
+        const password = document.getElementById("password").value;
+        if (this.value !== password) {
+            mostrarError(this, "Las contraseñas no coinciden");
+        } else {
+            quitarError(this);
+            quitarError(document.getElementById("password"));
+        }
+    });
+</script>
 </body>
 </html>
