@@ -19,15 +19,18 @@ if (is_null($carreraId)) {
 $apiBaseUrl = "https://api-ucne-emfugwekcfefc3ef.eastus-01.azurewebsites.net/api";
 $endpoints = [
     'asignaturas' => "$apiBaseUrl/Asignaturas",
-    'docentes' => "$apiBaseUrl/Docentes", 
-    'asignaciones' => "$apiBaseUrl/AsignacionDocentes"
+    'docentes' => "$apiBaseUrl/Docentes"
 ];
 
-// Función mejorada para obtener datos de la API
+// Función para obtener datos de la API con manejo de errores
 function obtenerDatosAPI($url) {
     $ch = curl_init($url);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($ch, CURLOPT_TIMEOUT, 10);
+    curl_setopt($ch, CURLOPT_HTTPHEADER, [
+        'Authorization: Bearer ' . ($_SESSION['authToken'] ?? '')
+    ]);
+    
     $response = curl_exec($ch);
     
     if (curl_errno($ch)) {
@@ -57,43 +60,19 @@ function obtenerDatosAPI($url) {
 // Obtener datos
 $asignaturas = obtenerDatosAPI($endpoints['asignaturas']) ?? [];
 $docentes = obtenerDatosAPI($endpoints['docentes']) ?? [];
-$asignaciones = obtenerDatosAPI($endpoints['asignaciones']) ?? [];
 
 // Filtrar asignaturas por carrera
 $asignaturasFiltradas = array_values(array_filter($asignaturas, function($a) use ($carreraId) {
     return isset($a['carreraId']) && $a['carreraId'] == $carreraId;
 }));
 
-// Construir relación completa de docentes por asignatura
-$docentesPorAsignatura = [];
-foreach ($asignaciones as $asignacion) {
-    if (!isset($asignacion['asignaturaId']) || !isset($asignacion['docenteId'])) continue;
-    
-    $asigId = $asignacion['asignaturaId'];
-    $docId = $asignacion['docenteId'];
-    
-    // Buscar docente completo
-    $docente = current(array_filter($docentes, function($d) use ($docId) {
-        return isset($d['docenteId']) && $d['docenteId'] == $docId;
-    }));
-    
-    if ($docente) {
-        if (!isset($docentesPorAsignatura[$asigId])) {
-            $docentesPorAsignatura[$asigId] = [];
-        }
-        
-        $docentesPorAsignatura[$asigId][] = [
-            'id' => $docente['docenteId'],
-            'nombre' => $docente['nombre'] ?? 'Docente no disponible',
-            'email' => $docente['email'] ?? ''
-        ];
+// Indexar docentes por ID para fácil acceso
+$docentesIndexados = [];
+foreach ($docentes as $docente) {
+    if (isset($docente['docenteId'])) {
+        $docentesIndexados[$docente['docenteId']] = $docente;
     }
 }
-
-// Depuración crítica
-error_log("Total asignaturas: " . count($asignaturas));
-error_log("Asignaturas filtradas: " . count($asignaturasFiltradas));
-error_log("Docentes por asignatura: " . json_encode(array_keys($docentesPorAsignatura)));
 ?>
 
 <!DOCTYPE html>
@@ -113,7 +92,6 @@ error_log("Docentes por asignatura: " . json_encode(array_keys($docentesPorAsign
         <button onclick="window.location.href='ConsultaComentarios.php'" class="logo-button">
             <img src="/Imagenes/guia-turistico 3.png" alt="Logo">
         </button>
-        <!-- <span style="margin-left: 80px; font-size: 1.2em;">Crear Nuevo Comentario</span> -->
     </div>
     <div class="container">
         <div class="form-header">
@@ -126,43 +104,51 @@ error_log("Docentes por asignatura: " . json_encode(array_keys($docentesPorAsign
                     <div class="date-field"><?= date('d/m/Y') ?></div>
                     <input type="hidden" name="fechaComentario" value="<?= date('Y-m-d\TH:i:s') ?>">
                 </div>
+                
                 <div class="form-group">
                     <label for="asignaturaId">Asignatura:</label>
                     <select id="asignaturaId" name="asignaturaId" class="form-control" required>
                         <option value="">Seleccione una asignatura</option>
-                        <?php foreach ($asignaturasFiltradas as $asignatura): ?>
-                            <option value="<?= $asignatura['asignaturaId'] ?>"><?= htmlspecialchars($asignatura['nombreAsignatura']) ?></option>
+                        <?php foreach ($asignaturasFiltradas as $asignatura): 
+                            $docenteId = $asignatura['docenteId'] ?? null;
+                            $docenteNombre = isset($docentesIndexados[$docenteId]['nombre']) 
+                                ? $docentesIndexados[$docenteId]['nombre'] 
+                                : 'Docente no asignado';
+                        ?>
+                            <option value="<?= $asignatura['asignaturaId'] ?>" 
+                                    data-docente-id="<?= $docenteId ?>"
+                                    data-docente-nombre="<?= htmlspecialchars($docenteNombre) ?>"
+                                    data-docente-email="<?= isset($docentesIndexados[$docenteId]['email']) 
+                                        ? htmlspecialchars($docentesIndexados[$docenteId]['email']) 
+                                        : '' ?>">
+                                <?= htmlspecialchars($asignatura['nombreAsignatura']) ?>
+                            </option>
                         <?php endforeach; ?>
                     </select>
                 </div>
+                
                 <div class="mb-3">
-                        <label for="docenteId" class="form-label">Docente:</label>
-                        <select id="docenteId" name="docenteId" class="form-select" required disabled>
-                            <option value="">Seleccione primero una asignatura</option>
-                            <?php 
-                            // Opción alternativa: precargar todos los docentes con data-attributes
-                            foreach ($docentes as $docente): ?>
-                                <option value="<?= htmlspecialchars($docente['docenteId']) ?>" 
-                                        data-asignatura="<?= htmlspecialchars($docente['asignaturaId'] ?? '') ?>"
-                                        style="display: none;">
-                                    <?= htmlspecialchars($docente['nombre']) ?>
-                                </option>
-                            <?php endforeach; ?>
-                        </select>
-                        <div id="teacherInfo" class="teacher-info" style="display: none;">
-                            <div class="teacher-avatar" id="teacherAvatar"></div>
-                            <div class="teacher-details">
-                                <span id="teacherName" class="fw-bold"></span>
-                                <span id="teacherEmail" class="teacher-email"></span>
-                            </div>
+                    <label for="docenteInfo" class="form-label">Docente:</label>
+                    <div id="docenteInfo" class="docente-info-box">
+                        <div id="teacherAvatar" class="teacher-avatar">
+                        </div>
+                        <div class="teacher-details">
+                            <span id="teacherName" class="">Seleccione una asignatura para que se coloque el docente</span>
+                            <span id="teacherEmail" class="teacher-email"></span>
                         </div>
                     </div>
+                    <input type="hidden" id="docenteId" name="docenteId" value="">
+                </div>
+                
                 <div class="form-group">
                     <label for="comentario">Comentario:</label>
-                    <textarea id="comentario" name="comentario" class="form-control" required placeholder="Escribe tu comentario aquí..."></textarea>
+                    <textarea id="comentario" name="comentario" class="form-control" required 
+                        placeholder="Escribe tu comentario aquí..." rows="5"></textarea>
                 </div>
+                
                 <input type="hidden" name="usuarioId" value="<?= $_SESSION['usuario_id'] ?? 1 ?>">
-                <div class="form-group">
+                
+                <div class="form-group mt-4">
                     <button type="submit" class="btn-submit">
                         <i class="bi bi-save-fill"></i> Guardar Comentario
                     </button>
@@ -170,57 +156,37 @@ error_log("Docentes por asignatura: " . json_encode(array_keys($docentesPorAsign
             </form>
         </div>
     </div>
+    
     <script>
-        // Versión alternativa con precarga de docentes
         document.addEventListener('DOMContentLoaded', function() {
             const asignaturaSelect = document.getElementById('asignaturaId');
-            const docenteSelect = document.getElementById('docenteId');
-            const teacherInfo = document.getElementById('teacherInfo');
+            const docenteIdInput = document.getElementById('docenteId');
+            const teacherName = document.getElementById('teacherName');
+            const teacherEmail = document.getElementById('teacherEmail');
             
-            // Mostrar/ocultar docentes según asignatura seleccionada
-            function actualizarDocentes() {
-                const asignaturaId = asignaturaSelect.value;
-                const options = docenteSelect.querySelectorAll('option');
+            // Actualizar información del docente cuando cambia la asignatura
+            asignaturaSelect.addEventListener('change', function() {
+                const selectedOption = this.options[this.selectedIndex];
+                const docenteId = selectedOption.dataset.docenteId;
+                const docenteNombre = selectedOption.dataset.docenteNombre;
+                const docenteEmail = selectedOption.dataset.docenteEmail;
                 
-                // Resetear
-                docenteSelect.value = '';
-                teacherInfo.style.display = 'none';
-                docenteSelect.disabled = !asignaturaId;
-                
-                if (!asignaturaId) return;
-                
-                // Mostrar solo docentes de esta asignatura
-                options.forEach(option => {
-                    if (option.value === '') return; // Mantener opción por defecto
+                if (docenteId) {
+                    teacherName.textContent = docenteNombre;
+                    teacherEmail.textContent = docenteEmail;
+                    docenteIdInput.value = docenteId;
                     
-                    if (option.dataset.asignatura === asignaturaId) {
-                        option.style.display = '';
-                    } else {
-                        option.style.display = 'none';
-                    }
-                });
-                
-                docenteSelect.disabled = false;
-            }
-            
-            // Mostrar información del docente seleccionado
-            function mostrarInfoDocente() {
-                if (docenteSelect.value && docenteSelect.selectedIndex > 0) {
-                    const selectedOption = docenteSelect.options[docenteSelect.selectedIndex];
-                    teacherInfo.style.display = 'flex';
+                    // Cambiar clases para resaltar la información
+                    teacherName.parentElement.parentElement.classList.remove('no-teacher');
+                    teacherName.parentElement.parentElement.classList.add('has-teacher');
                 } else {
-                    teacherInfo.style.display = 'none';
+                    teacherName.textContent = 'No hay docente asignado';
+                    teacherEmail.textContent = '';
+                    docenteIdInput.value = '';
+                    teacherName.parentElement.parentElement.classList.remove('has-teacher');
+                    teacherName.parentElement.parentElement.classList.add('no-teacher');
                 }
-            }
-            
-            // Asignar eventos
-            asignaturaSelect.addEventListener('change', actualizarDocentes);
-            docenteSelect.addEventListener('change', mostrarInfoDocente);
-            
-            // Inicializar si hay una asignatura seleccionada
-            if (asignaturaSelect.value) {
-                actualizarDocentes();
-            }
+            });
         });
     </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

@@ -83,7 +83,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <div class="top-bar"></div>
     <div class="container">
         <div class="header">
-            <img src="/Imagenes/guia-turistico 3.png" alt="Logo" class="logo">
+            <img src="Imagenes/UCNE.jpg" alt="Logo" class="logo">
             <div class="wave"></div>
         </div>
 

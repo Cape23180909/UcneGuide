@@ -126,7 +126,7 @@ try {
         <?php if ($error): ?>
             <div class="alert alert-danger"><?= htmlspecialchars($error) ?></div>
         <?php elseif (empty($comentarios)): ?>
-            <div class="alert alert-warning">No hay comentarios registrados.</div>
+          
         <?php else: ?>
             <div class="table-responsive">
                 <table class="styled-table">

@@ -83,7 +83,7 @@ $enlaceAsignaturas = obtenerEnlaceAsignaturas($carreraId);
     <nav class="menu-container">
         <a href="<?php echo $enlaceAsignaturas; ?>" class="menu-link">
             <div class="menu-item">
-                <img src="/Imagenes/Asignaturas.png" alt="Facultades" class="menu-icon">
+                <img src="/Imagenes/AsignaturasPapo.png.webp" alt="Facultades" class="menu-icon">
                 <span>Asignaturas</span>
             </div>
         </a>

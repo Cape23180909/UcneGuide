@@ -42,9 +42,9 @@ $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 curl_close($ch);
 
 if ($httpCode >= 200 && $httpCode < 300) {
-    header('Location: DescripcionAsignaturas.php?codigo=' . urlencode($_POST['codigoAsignatura']) . '&success=comentario_guardado');
+    header('Location: ConsultaComentarios.php?codigo=' . urlencode($_POST['codigoAsignatura']) . '&success=comentario_guardado');
 } else {
-    header('Location: DescripcionAsignaturas.php?codigo=' . urlencode($_POST['codigoAsignatura']) . '&error=error_api');
+    header('Location: ConsultaComentarios.php?codigo=' . urlencode($_POST['codigoAsignatura']) . '&error=error_api');
 }
 exit();
 ?>
