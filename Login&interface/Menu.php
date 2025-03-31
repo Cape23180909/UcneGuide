@@ -49,13 +49,13 @@ $enlaceAsignaturas = obtenerEnlaceAsignaturas($carreraId);
     <title>Menú</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="menu.css">
-    <link rel="Icon" href="/Imagenes/guia-turistico 3.png">
+    <link rel="Icon" href="/Imagenes/UCNE.jpg">
 </head>
     <!-- Encabezado -->
     <header class="menu-header">
         <div class="header-content">
             <a href="Menu.php" class="logo-button">
-                <img src="/Imagenes/guia-turistico 3.png" alt="Logo" class="header-logo">
+                <img src="/Imagenes/UCNE.jpg" alt="Logo" class="header-logo">
             </a>
             <h1>Menú Principal</h1>
             

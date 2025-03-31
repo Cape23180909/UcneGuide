@@ -77,13 +77,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
     <link rel="stylesheet" href="Login.css">
-    <link rel="Icon" href="/Imagenes/guia-turistico 3.png">
+    <link rel="Icon" href="/Imagenes/UCNE.jpg">
 </head>
 <body>
     <div class="top-bar"></div>
     <div class="container">
         <div class="header">
-            <img src="Imagenes/UCNE.jpg" alt="Logo" class="logo">
+            <img src="/Imagenes/UCNE.jpg" alt="Logo" class="logo">
             <div class="wave"></div>
         </div>
 

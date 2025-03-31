@@ -40,13 +40,13 @@ foreach ($asignaturas as $asignatura) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Detalles de la Asignatura</title>
     <link rel="stylesheet" href="DescripcionAsignaturas.css">
-    <link rel="Icon" href="/Imagenes/guia-turistico 3.png">
+    <link rel="Icon" href="/Imagenes/UCNE.jpg">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
     <div class="navbar">
         <a href="Menu.php" class="logo-button">
-            <img src="/Imagenes/guia-turistico 3.png" alt="Logo" class="logo">
+            <img src="/Imagenes/UCNE.jpg" alt="Logo" class="logo">
         </a>
         <span class="title">Detalles de la asignatura</span>
     </div>

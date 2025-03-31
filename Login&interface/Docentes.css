@@ -33,7 +33,6 @@ body {
 .header-logo {
     width: 60px;
     height: 60px;
-    border-radius: 50%;
     border: 2px solid var(--azul-principal);
     box-shadow: 0 2px 8px rgba(7, 71, 136, 0.2);
 }
@@ -60,10 +59,10 @@ body {
     box-shadow: 0 4px 12px rgba(7, 71, 136, 0.15);
 }
 
-.icon-circle i {
+ .icon-circle i {
     color: var(--amarillo-accento);
     font-size: 2.8rem;
-}
+} 
 
 .teacher-card {
     background: var(--blanco);

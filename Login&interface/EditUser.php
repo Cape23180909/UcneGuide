@@ -125,14 +125,14 @@ $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Actualizar Usuario</title>
     <link rel="stylesheet" href="EditUser.css">
-    <link rel="Icon" href="/Imagenes/guia-turistico 3.png">
+    <link rel="Icon" href="/Imagenes/UCNE.jpg">
 </head>
 <body>
     <div class="top-bar"></div>
 
     <div class="container">
         <div class="signup-header">
-            <img src="/Imagenes/guia-turistico 3.png" alt="Logo" class="logo">
+            <img src="/Imagenes/UCNE.jpg" alt="Logo" class="logo">
             <div class="wave"></div>
         </div>
 

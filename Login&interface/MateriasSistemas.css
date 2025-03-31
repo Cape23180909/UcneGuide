@@ -94,6 +94,13 @@ header {
     border-top-right-radius: 15px;
 }
 
+header img {
+    width: 100px;  /* Ajusta este valor según el tamaño deseado */
+    height: auto;  /* Mantiene la proporción */
+    vertical-align: middle;  /* Alinea verticalmente con el texto */
+    margin-right: 15px;  /* Espacio entre el logo y el texto */
+}
+
 /* Contenedor de materias */
 .materias {
     padding: 20px;

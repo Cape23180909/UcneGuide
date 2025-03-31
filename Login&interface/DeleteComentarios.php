@@ -94,12 +94,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['confirmar'])) {
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.0/font/bootstrap-icons.css">
     <link rel="stylesheet" href="DeleteComentarios.css">
-    <link rel="Icon" href="/Imagenes/guia-turistico 3.png">
+    <link rel="Icon" href="/Imagenes/UCNE.jpg">
 </head>
 <body>
     <div class="navbar">
         <button onclick="window.location.href='ConsultaComentarios.php'" class="logo-button">
-            <img src="/Imagenes/guia-turistico 3.png" alt="Logo">
+            <img src="/Imagenes/UCNE.jpg" alt="Logo">
         </button>
     </div>
 

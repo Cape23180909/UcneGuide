@@ -9,8 +9,9 @@ $maestros = @json_decode(file_get_contents($apiUrl), true) ?: [];
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gestor de Docentes</title>
+    <title> Docentes</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="Icon" href="/Imagenes/UCNE.jpg">
     <link rel="stylesheet" href="Docentes.css">
     <script>
         const maestrosData = <?= json_encode($maestros) ?>;
@@ -19,15 +20,15 @@ $maestros = @json_decode(file_get_contents($apiUrl), true) ?: [];
 <body>
     <div class="top-bar">
         <a href="Menu.php" class="logo-button">
-            <img src="/Imagenes/guia-turistico 3.png" alt="Logo" class="header-logo">
+            <img src="/Imagenes/UCNE.jpg" alt="Logo" class="header-logo">
         </a>
     </div>
     
     <div class="academic-container">
         <div class="header-section">
-            <div class="icon-circle">
+             <div class="icon-circle">
                 <i class="fas fa-chalkboard-teacher"></i>
-            </div>
+            </div> 
             <h1 class="main-title">Docentes</h1>
             
             <div class="search-bar">
