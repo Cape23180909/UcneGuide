@@ -29,13 +29,13 @@ $carreraIdBuscado = 4; // ID específico para Sistemas
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Asignaturas Administracion de Emppresas</title>
     <link rel="stylesheet" href="MateriasSistemas.css">
-    <link rel="Icon" href="/Imagenes/guia-turistico 3.png">
+    <link rel="Icon" href="/Imagenes/UCNE.jpg">
 </head>
 <body>
     <div class="container">
         <header>
             <a href="Menu.php">
-                <img src="/Imagenes/guia-turistico 3.png" alt="Logo">
+                <img src="/Imagenes/UCNE.jpg" alt="Logo">
             </a>
             Administracion de Empresas
         </header>
