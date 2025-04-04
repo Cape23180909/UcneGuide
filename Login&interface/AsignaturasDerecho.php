@@ -2,7 +2,7 @@
 // URL de la API
 $apiUrl = "https://api-ucne-emfugwekcfefc3ef.eastus-01.azurewebsites.net/api/Asignaturas?CarreraId=14";
 
-// Inicializar cURL
+// Inicializar URL
 $ch = curl_init();
 curl_setopt($ch, CURLOPT_URL, $apiUrl);
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
