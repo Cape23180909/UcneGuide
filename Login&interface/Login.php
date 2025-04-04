@@ -7,6 +7,7 @@ if (isset($_SESSION['usuario'])) {
     $carrera = $_SESSION['usuario']['carreraNombre'] ?? 'Sin carrera asignada';
 }
 
+// procesamos el formulario
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL);
     $password = $_POST['password'];
@@ -16,10 +17,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit();
     }
 
-    // URL de la API
+    // URL de la  API Y Conexion
     $apiUrl = "https://api-ucne-emfugwekcfefc3ef.eastus-01.azurewebsites.net/api/Usuarios";
 
-    // Configurar cURL
     $ch = curl_init($apiUrl);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
@@ -33,7 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit();
     }
 
-    // Decodificar JSON
+    // Buscando ese Usuario
     $userData = json_decode($response, true);
     $user = null;
 
@@ -55,7 +55,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit();
     }
 
-    // Iniciar sesión con la información del usuario
+    // Inicia sesion con la información del usuario
     $_SESSION['authToken'] = bin2hex(random_bytes(32));
     $_SESSION['usuario'] = [
         'usuarioId' => $user['usuarioId'],
