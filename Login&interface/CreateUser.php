@@ -126,7 +126,6 @@ $facultades = obtenerDatosAPI("https://api-ucne-emfugwekcfefc3ef.eastus-01.azure
             </form>
         </div>
     </div>
-
     <script>
         function validarFormulario() {
             var password = document.getElementById("password").value;

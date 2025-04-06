@@ -119,10 +119,6 @@ try {
                 <span class="fas fa-plus-square"></span> Crear
             </a>
         
-        <?php if (isset($_GET['success'])): ?>
-            <div class="alert alert-success">Comentario guardado exitosamente!</div>
-        <?php endif; ?>
-        
         <?php if ($error): ?>
             <div class="alert alert-danger"><?= htmlspecialchars($error) ?></div>
         <?php elseif (empty($comentarios)): ?>

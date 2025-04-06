@@ -99,6 +99,7 @@ foreach ($docentes as $docente) {
         </div>
         <div class="form-body">
             <form action="guardar_comentario.php" method="post">
+
                 <div class="form-group">
                     <label for="fecha">Fecha:</label>
                     <div class="date-field"><?= date('d/m/Y') ?></div>
@@ -146,7 +147,7 @@ foreach ($docentes as $docente) {
                         placeholder="Escribe tu comentario aquí..." rows="5"></textarea>
                 </div>
                 
-                <input type="hidden" name="usuarioId" value="<?= $_SESSION['usuario_id'] ?? 1 ?>">
+                <!-- <input type="hidden" name="usuarioId" value="<?= $_SESSION['usuario_id'] ?? 1 ?>"> -->
                 
                 <div class="form-group mt-4">
                     <button type="submit" class="btn-submit">
@@ -176,7 +177,6 @@ foreach ($docentes as $docente) {
                     teacherEmail.textContent = docenteEmail;
                     docenteIdInput.value = docenteId;
                     
-                    // Cambiar clases para resaltar la información
                     teacherName.parentElement.parentElement.classList.remove('no-teacher');
                     teacherName.parentElement.parentElement.classList.add('has-teacher');
                 } else {

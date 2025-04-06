@@ -11,7 +11,7 @@ if (!isset($_SESSION['usuario'])) {
 $requiredFields = ['comentarioId', 'asignaturaId', 'docenteId', 'comentario'];
 foreach ($requiredFields as $field) {
     if (empty($_POST[$field])) {
-        header('Location: DescripcionAsignaturas.php?codigo=' . urlencode($_POST['codigoAsignatura']) . '&error=campos_requeridos');
+        header('Location: ConsultaComentarios.php?codigo=' . urlencode($_POST['codigoAsignatura']) . '&error=campos_requeridos');
         exit();
     }
 }
@@ -46,7 +46,7 @@ $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 curl_close($ch);
 
 if ($httpCode >= 200 && $httpCode < 300) {
-    header('Location: DescripcionAsignaturas.php?codigo=' . urlencode($_POST['codigoAsignatura']) . '&success=comentario_actualizado');
+    header('Location: ConsultaComentarios.php?codigo=' . urlencode($_POST['codigoAsignatura']) . '&success=comentario_actualizado');
 } else {
     header('Location: DescripcionAsignaturas.php?codigo=' . urlencode($_POST['codigoAsignatura']) . '&error=error_api');
 }
